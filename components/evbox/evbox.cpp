@@ -18,7 +18,7 @@ void EVBoxDevice::setup() {
 
 void EVBoxDevice::loop() {
   uint32_t inactivity_seconds = 20;
-  uint32_t lastMsg = 0;
+  static uint32_t lastMsg = 0;
 
   // Purge data
   while (this->available()) {
@@ -47,21 +47,22 @@ void EVBoxDevice::loop() {
 
   ESP_LOGV(TAG, "Waited for %d ms for data to arrive", millis() - now);
 
+/*
   // Data waiting?
   if (datawaiting) {
     // Receive data
- /*
+ 
     if (this->read_array((uint8_t *) receive_data_, 8)) {
       // Calc CRC16
       // Check CRC16
         return true;  // Checksum OK
     } else
       ESP_LOGD(TAG, "Failed receiving data");
-  */
+
   } else
     ESP_LOGD(TAG, "No data available");
 
-
+*/
   // Broadcast verbose state every 5 seconds
   if (millis() - lastMsg > 5000) {
     lastMsg = millis();
