@@ -9,6 +9,13 @@ from esphome.const import (
 )
 from esphome import pins
 
+CONF_SETPOINT = "setpoint"
+CONF_MAX_CC = "max_charge_current"
+CONF_MIN_CC = "min_charge_current"
+CONF_KP = "kp"
+CONF_KI = "ki"
+CONF_PD = "kd"
+
 CODEOWNERS = ["@ajvdw"]
 DEPENDENCIES = ["uart"]
 
@@ -28,6 +35,12 @@ CONFIG_SCHEMA = (
         {
             cv.GenerateID(): cv.declare_id(EVBoxDevice),
             cv.Required(CONF_FLOW_CONTROL_PIN): pins.gpio_output_pin_schema,
+            cv.Optional(CONF_SETPOINT,default=0.0): cv.float,
+            cv.Optional(CONF_MIN_CC,default=6.0): cv.float_range(min=6.0, max=16.0),
+            cv.Optional(CONF_MAX_CC,default=16.0): cv.float_range(min=6.0, max=16.0),
+            cv.Optional(CONF_KP,default=0.7): cv.float,
+            cv.Optional(CONF_KI,default=0.1): cv.float,
+            cv.Optional(CONF_KD,default=0.05): cv.float,
         }
     )
     .extend(cv.COMPONENT_SCHEMA)
@@ -41,4 +54,15 @@ async def to_code(config):
     await uart.register_uart_device(var, config)
     if CONF_FLOW_CONTROL_PIN in config:
         pin = await gpio_pin_expression(config[CONF_FLOW_CONTROL_PIN])
-        cg.add(var.set_flow_control_pin(pin))
+    if CONF_MIN_CC in config:
+        cg.add(var.set_min_charge_current(config[CONF_MIN_CC]))
+    if CONF_MAX_CC in config:
+        cg.add(var.set_max_charge_current(config[CONF_MAX_CC]))
+    if CONF_SETPOINT in config:
+        cg.add(var.set_setpoint(config[CONF_SETPOINT]))
+    if CONF_KP in config:
+        cg.add(var.set_kp(config[CONF_KP]))
+    if CONF_KI in config:
+        cg.add(var.set_ki(config[CONF_KI]))
+    if CONF_KD in config:
+        cg.add(var.set_kd(config[CONF_KD]))
