@@ -22,7 +22,9 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
   
  protected:
   GPIOPin *flow_control_pin_{nullptr};
-  void on_mqtt_receive_(const std::string& topic, const std::string& payload);
+  uint8_t receive_data_[256];
+  uint32_t received_len_;
+  bool receiving_;
 };
 
 }  // namespace evbox
