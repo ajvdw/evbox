@@ -1,7 +1,7 @@
 #pragma once
 
-#include "esphome/components/mqtt/custom_mqtt_device.h"
 #include "esphome/components/uart/uart.h"
+#include "esphome/components/mqtt/custom_mqtt_device.h"
 #include "esphome/core/application.h"
 #include "esphome/core/component.h"
 #include "esphome/core/defines.h"
