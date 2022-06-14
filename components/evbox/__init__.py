@@ -14,7 +14,7 @@ CONF_MAX_CC = "max_charge_current"
 CONF_MIN_CC = "min_charge_current"
 CONF_KP = "kp"
 CONF_KI = "ki"
-CONF_PD = "kd"
+CONF_KD = "kd"
 
 CODEOWNERS = ["@ajvdw"]
 DEPENDENCIES = ["uart"]
