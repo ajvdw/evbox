@@ -55,9 +55,9 @@ async def to_code(config):
     if CONF_FLOW_CONTROL_PIN in config:
         pin = await gpio_pin_expression(config[CONF_FLOW_CONTROL_PIN])
     if CONF_MIN_CC in config:
-        cg.add(var.set_min_charge_current(config[CONF_MIN_CC]))
+        cg.add(var.set_min_cc(config[CONF_MIN_CC]))
     if CONF_MAX_CC in config:
-        cg.add(var.set_max_charge_current(config[CONF_MAX_CC]))
+        cg.add(var.set_max_cc(config[CONF_MAX_CC]))
     if CONF_SETPOINT in config:
         cg.add(var.set_setpoint(config[CONF_SETPOINT]))
     if CONF_KP in config:
