@@ -5,7 +5,6 @@ namespace mqtt {
 namespace evbox {
 
 void EVBoxDevice::setup() {
-  this->init();
   // Set flowcontrolpin
   if (this->flow_control_pin_ != nullptr)
     this->flow_control_pin_->setup();
@@ -19,6 +18,7 @@ void EVBoxDevice::setup() {
 
 void EVBoxDevice::loop() {
   uint32_t inactivity_seconds = 20;
+  uint32_t lastMsg = 0;
 
   // Purge data
   while (this->available()) {
@@ -50,12 +50,14 @@ void EVBoxDevice::loop() {
   // Data waiting?
   if (datawaiting) {
     // Receive data
+ /*
     if (this->read_array((uint8_t *) receive_data_, 8)) {
       // Calc CRC16
       // Check CRC16
         return true;  // Checksum OK
     } else
       ESP_LOGD(TAG, "Failed receiving data");
+  */
   } else
     ESP_LOGD(TAG, "No data available");
 
