@@ -4,8 +4,10 @@
  * This Library is licensed under a GPLv3 License
  **********************************************************************************************/
 #include "pid.h"
-#include "esphome/core/defines.h"
+//#include "esphome/core/defines.h"
 //#include "esphome/core/helpers.h"
+#include "esphome/core/application.h"
+#include "esphome/core/component.h"
 
 /*Constructor (...)*********************************************************
  *    The parameters specified here are those for for which we can't set up
