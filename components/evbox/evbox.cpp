@@ -1,4 +1,3 @@
-#include "esphome/core/log.h"
 #include "evbox.h"
 
 namespace esphome {
