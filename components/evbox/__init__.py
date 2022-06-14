@@ -35,12 +35,12 @@ CONFIG_SCHEMA = (
         {
             cv.GenerateID(): cv.declare_id(EVBoxDevice),
             cv.Required(CONF_FLOW_CONTROL_PIN): pins.gpio_output_pin_schema,
-            cv.Optional(CONF_SETPOINT,default=0.0): cv.float,
+            cv.Optional(CONF_SETPOINT,default=0.0): cv.float_,
             cv.Optional(CONF_MIN_CC,default=6.0): cv.float_range(min=6.0, max=16.0),
             cv.Optional(CONF_MAX_CC,default=16.0): cv.float_range(min=6.0, max=16.0),
-            cv.Optional(CONF_KP,default=0.7): cv.float,
-            cv.Optional(CONF_KI,default=0.1): cv.float,
-            cv.Optional(CONF_KD,default=0.05): cv.float,
+            cv.Optional(CONF_KP,default=0.7): cv.float_,
+            cv.Optional(CONF_KI,default=0.1): cv.float_,
+            cv.Optional(CONF_KD,default=0.05): cv.float_,
         }
     )
     .extend(cv.COMPONENT_SCHEMA)
