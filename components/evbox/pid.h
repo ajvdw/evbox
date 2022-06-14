@@ -23,6 +23,9 @@ class PID
 	
     void SetMode(int Mode);               // * sets PID to either Manual (0) or Auto (non-0)
 
+    void SetSampleTime(int);              // * sets the frequency, in Milliseconds, with which 
+                                          //   the PID calculation is performed.  default is 100
+
     bool Compute();                       // * performs the PID calculation.  it should be
                                           //   called every time loop() cycles. ON/OFF 
     void SetOutputLimits(double, double); // * clamps the output to a specific range. 0-255 by default, but
@@ -72,7 +75,7 @@ class PID
                                   //   what these values are.  with pointers we'll just know.
 	double outputSum, lastInput;
 
-	unsigned long SampleTime = 100; //ms
+	unsigned long SampleTime;    //
 	double outMin, outMax;
 	bool inAuto, pOnE;
 };
