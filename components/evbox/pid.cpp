@@ -47,7 +47,7 @@ PID::PID(double* Input, double* Output, double* Setpoint,
  **********************************************************************************/
 bool PID::Compute()
 {
-   if(!inAuto) return false;
+    if(!inAuto) return false;
 
     /*Compute all the working error variables*/
     double input = *myInput;
@@ -75,7 +75,22 @@ bool PID::Compute()
 
     /*Remember some variables for next time*/
     lastInput = input;
-	return true;
+    return true;
+}
+
+/* SetSampleTime(...) *********************************************************
+ * sets the period, in Milliseconds, at which the calculation is performed
+ ******************************************************************************/
+void PID::SetSampleTime(int NewSampleTime)
+{
+   if (NewSampleTime > 0)
+   {
+      double ratio  = (double)NewSampleTime
+                      / (double)SampleTime;
+      ki *= ratio;
+      kd /= ratio;
+      SampleTime = (unsigned long)NewSampleTime;
+   }
 }
 
 /* SetTunings(...)*************************************************************

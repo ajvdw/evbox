@@ -72,7 +72,7 @@ class PID
                                   //   what these values are.  with pointers we'll just know.
 	double outputSum, lastInput;
 
-	unsigned long SampleTime;
+	unsigned long SampleTime = 100; //ms
 	double outMin, outMax;
 	bool inAuto, pOnE;
 };
