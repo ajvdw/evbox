@@ -1,7 +1,7 @@
 /**********************************************************************************************
- * PID Library - Version 1.1.1
+ * Based on PID Library - Version 1.1.1
  * by Brett Beauregard <br3ttb@gmail.com> brettbeauregard.com
- * This Library is licensed under a GPLv3 License
+ * PID Library is licensed under a GPLv3 License
  **********************************************************************************************/
 #include "pid.h"
 //#include "esphome/core/defines.h"
@@ -10,8 +10,8 @@
 #include "esphome/core/component.h"
 
 /*Constructor (...)*********************************************************
- *    The parameters specified here are those for for which we can't set up
- *    reliable defaults, so we need to have the user set them.
+ * The parameters specified here are those for for which we can't set up
+ * reliable defaults, so we need to have the user set them.
  ***************************************************************************/
 PID::PID(double* Input, double* Output, double* Setpoint,
         double Kp, double Ki, double Kd, int POn, int ControllerDirection)
@@ -29,8 +29,8 @@ PID::PID(double* Input, double* Output, double* Setpoint,
 }
 
 /*Constructor (...)*********************************************************
- *    To allow backwards compatability for v1.1, or for people that just want
- *    to use Proportional on Error without explicitly saying so
+ * To allow backwards compatability for v1.1, or for people that just want
+ * to use Proportional on Error without explicitly saying so
  ***************************************************************************/
 
 PID::PID(double* Input, double* Output, double* Setpoint,
@@ -40,12 +40,10 @@ PID::PID(double* Input, double* Output, double* Setpoint,
 
 }
 
-
 /* Compute() **********************************************************************
- *     This, as they say, is where the magic happens.  this function should be called
- *   every time "void loop()" executes.  the function will decide for itself whether a new
- *   pid Output needs to be computed.  returns true when the output is computed,
- *   false when nothing has been done.
+ * This, as they say, is where the magic happens. this function should be called
+ * every time pid Output needs to be computed. returns true when the output is 
+ * computed, false when nothing has been done.
  **********************************************************************************/
 bool PID::Compute()
 {

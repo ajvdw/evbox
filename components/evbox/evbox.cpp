@@ -57,7 +57,7 @@ void EVBoxDevice::loop() {
     else if( c == 3 && received_len_ > 8) { // Message End 
       receiving_=false;
       receive_data_[received_len_]=0;
-      ESP_LOGD(TAG, "RX: %s ", receive_data_.c_str());
+      ESP_LOGD(TAG, "RX: %s", receive_data_ );
       received_len_=0;     
     }
     else if( receiving_ && c >= 48 && c<= 70 ) { // Capture message data
