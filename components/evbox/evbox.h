@@ -21,6 +21,7 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
   void set_flow_control_pin(GPIOPin *flow_control_pin) { this->flow_control_pin_ = flow_control_pin; }
   
  protected:
+  void on_mqtt_receive_(const std::string& topic, const std::string& payload);
   GPIOPin *flow_control_pin_{nullptr};
   uint8_t receive_data_[256];
   uint32_t received_len_;
