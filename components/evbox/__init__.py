@@ -16,7 +16,7 @@ CONF_KP = "kp"
 CONF_KI = "ki"
 CONF_KD = "kd"
 CONF_SAMPLETIME = "sampletime"
-CONF_MEASURED_VALUE = "measured_value"
+CONF_SAMPLEVALUE = "samplevalue"
 
 CODEOWNERS = ["@ajvdw"]
 DEPENDENCIES = ["uart"]
@@ -43,7 +43,7 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_KI,default=0.1): cv.float_,
             cv.Optional(CONF_KD,default=0.05): cv.float_,
             cv.Optional(CONF_SAMPLETIME,default=1.0): cv.float_range(min=0.1, max=30.0),
-            cv.Optional(CONF_MEASURED_VALUE,default=0.0): cv.float_range(min=6.0, max=100000.0),
+            cv.Optional(CONF_SAMPLEVALUE,default=0.0): cv.float_range(min=6.0, max=100000.0),
             cv.Optional(CONF_SETPOINT,default=0.0): cv.float_range(min=0.0, max=100000.0),
         }
     )
@@ -72,5 +72,5 @@ async def to_code(config):
         cg.add(var.set_kd(config[CONF_KD]))
     if CONF_SAMPLETIME in config:
         cg.add(var.set_sampletime(config[CONF_SAMPLETIME]))
-    if CONF_MEASURED_VALUE in config:
-        cg.add(var.set_measured_value(config[CONF_MEASURED_VALUE]))
+    if CONF_SAMPLEVALUE in config:
+        cg.add(var.set_samplevalue(config[CONF_SAMPLEVALUE]))
