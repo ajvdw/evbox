@@ -76,7 +76,7 @@ void EVBoxDevice::loop() {
   }
 
   // Broadcast verbose state every 5 seconds
-  if (now) - lastMsg > 5000) {
+  if (now - lastMsg > 5000) {
     lastMsg = now;
     std::string topic = App.get_name() + "/current/state";
     if (this->publish(topic, "24", 0, true))
