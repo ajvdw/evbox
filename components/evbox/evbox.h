@@ -2,6 +2,7 @@
 
 #include "esphome/core/application.h"
 #include "esphome/core/component.h"
+#include "esphome/core/automation.h"
 #include "esphome/core/defines.h"
 #include "esphome/core/helpers.h"
 #include "esphome/core/log.h"
@@ -27,7 +28,21 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
   void set_kp(float kp) { this->kp_ = kp; }
   void set_ki(float ki) { this->ki_ = ki; }
   void set_kd(float kd) { this->kd_ = kd; }
-  
+
+ template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
+ public:
+  explicit SetSampleValueAction(Stepper *parent) : parent_(parent) {}
+
+  TEMPLATABLE_VALUE(float, samplevalue);
+
+  void play(Ts... x) override {
+    float samplevalue = this->samplevalue.value(x...);
+  }
+
+ protected:
+  Stepper *parent_;
+};
+ 
  protected:
   void on_mqtt_receive_(const std::string& topic, const std::string& payload);
   GPIOPin *flow_control_pin_{nullptr};
