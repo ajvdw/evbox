@@ -4,7 +4,7 @@ from esphome.components import text_sensor
 from esphome.const import (
     CONF_ID,
 )
-from . import CONF_EVBOX_ID, CONF_SAMPLEVALUE, CONF_SETPOINT, EVBOX_COMPONENT_SCHEMA
+from . import CONF_EVBOX_ID, CONF_SAMPLEVALUE, EVBOX_COMPONENT_SCHEMA
 
 CONF_CHARGE_CURRENT = "charge_current"
 CONF_TOTAL_ENERGY = "total_energy"
