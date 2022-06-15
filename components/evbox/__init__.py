@@ -77,7 +77,7 @@ async def to_code(config):
 
 @automation.register_action(
     "evbox.set_samplevalue",
-    SetSampleValue,
+    SetSampleValueAction,
     cv.Schema(
         {
             cv.Required(CONF_ID): cv.use_id(EVBoxDevice),
