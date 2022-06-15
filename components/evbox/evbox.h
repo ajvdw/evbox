@@ -31,7 +31,7 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
 
  template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
  public:
-  explicit SetSampleValueAction(Stepper *parent) : parent_(parent) {}
+  explicit SetSampleValueAction(EVBoxDevice *parent) : parent_(parent) {}
 
   TEMPLATABLE_VALUE(float, samplevalue);
 
@@ -40,7 +40,7 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
   }
 
  protected:
-  Stepper *parent_;
+  EVBoxDevice *parent_;
 };
  
  protected:
