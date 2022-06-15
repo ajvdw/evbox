@@ -16,7 +16,6 @@ CONF_KP = "kp"
 CONF_KI = "ki"
 CONF_KD = "kd"
 CONF_SAMPLETIME = "sampletime"
-CONF_SAMPLEVALUE = "samplevalue"
 
 CODEOWNERS = ["@ajvdw"]
 DEPENDENCIES = ["uart"]
@@ -37,7 +36,7 @@ CONFIG_SCHEMA = (
         {
             cv.GenerateID(): cv.declare_id(EVBoxDevice),
             cv.Required(CONF_FLOW_CONTROL_PIN): pins.gpio_output_pin_schema,
-            cv.Required(CONF_SAMPLEVALUE): cv.float_,
+            cv.Required(CONF_VALUE): cv.float_,
             cv.Optional(CONF_SETPOINT,default=0.0): cv.float_,
             cv.Optional(CONF_MIN_CC,default=6.0): cv.float_range(min=6.0, max=32.0),
             cv.Optional(CONF_MAX_CC,default=16.0): cv.float_range(min=6.0, max=32.0),
@@ -73,4 +72,4 @@ async def to_code(config):
     if CONF_SAMPLETIME in config:
         cg.add(var.set_sampletime(config[CONF_SAMPLETIME]))
     if CONF_SAMPLEVALUE in config:
-        cg.add(var.set_samplevalue(config[CONF_SAMPLEVALUE]))
+        cg.add(var.set_samplevalue(config[CONF_VALUE]))
