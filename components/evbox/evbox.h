@@ -2,6 +2,7 @@
 
 #include "esphome/core/application.h"
 #include "esphome/core/component.h"
+#include "esphome/components/text_sensor/text_sensor.h"
 #include "esphome/core/automation.h"
 #include "esphome/core/defines.h"
 #include "esphome/core/helpers.h"
@@ -22,6 +23,14 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   void set_max_cc(float max_charge_current) { this->max_charge_current_ = max_charge_current; }
   void set_sampletime(float sampletime) { this->sampletime_ = sampletime; }
   void set_samplevalue(float samplevalue) { this->samplevalue_ = samplevalue; }
+
+
+  void set_samplevalue_text_sensor(text_sensor::TextSensor *text_sensor) { this->samplevalue_text_sensor_ = text_sensor };
+  void set_charge_current_text_sensor(text_sensor::TextSensor *text_sensor) { this->charge_current_text_sensor_ = text_sensor };
+  void set_total_energy_text_sensor(text_sensor::TextSensor *text_sensor) { this->total_energy_text_sensor_ = text_sensor };
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
   void set_setpoint(float setpoint) { this->setpoint_ = setpoint; }
   void set_kp(float kp) { this->kp_ = kp; }
   void set_ki(float ki) { this->ki_ = ki; }
@@ -29,7 +38,9 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
  
  protected:
   GPIOPin *flow_control_pin_{nullptr};
-
+  TextSensor *samplevalue_text_sensor_{nullptr};
+  TextSensor *set_charge_current_text_sensor_{nullptr};
+  TextSensor *total_energy_text_sensor{nullptr};
   bool receiving_;
   uint8_t received_data_[256];
   uint32_t received_len_;
