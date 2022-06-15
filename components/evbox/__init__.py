@@ -15,6 +15,7 @@ CONF_MIN_CC = "min_charge_current"
 CONF_KP = "kp"
 CONF_KI = "ki"
 CONF_KD = "kd"
+CONF_SAMPLETIME = "sampletime"
 
 CODEOWNERS = ["@ajvdw"]
 DEPENDENCIES = ["uart"]
@@ -36,11 +37,12 @@ CONFIG_SCHEMA = (
             cv.GenerateID(): cv.declare_id(EVBoxDevice),
             cv.Required(CONF_FLOW_CONTROL_PIN): pins.gpio_output_pin_schema,
             cv.Optional(CONF_SETPOINT,default=0.0): cv.float_,
-            cv.Optional(CONF_MIN_CC,default=6.0): cv.float_range(min=6.0, max=16.0),
-            cv.Optional(CONF_MAX_CC,default=16.0): cv.float_range(min=6.0, max=16.0),
+            cv.Optional(CONF_MIN_CC,default=6.0): cv.float_range(min=6.0, max=32.0),
+            cv.Optional(CONF_MAX_CC,default=16.0): cv.float_range(min=6.0, max=32.0),
             cv.Optional(CONF_KP,default=0.7): cv.float_,
             cv.Optional(CONF_KI,default=0.1): cv.float_,
             cv.Optional(CONF_KD,default=0.05): cv.float_,
+            cv.Optional(CONF_SAMPLETIME,default=1.0): cv.float_range(min=0.1, max=30.0),
         }
     )
     .extend(cv.COMPONENT_SCHEMA)
@@ -66,3 +68,5 @@ async def to_code(config):
         cg.add(var.set_ki(config[CONF_KI]))
     if CONF_KD in config:
         cg.add(var.set_kd(config[CONF_KD]))
+    if CONF_SAMPLETIME in config:
+        cg.add(var.set_sampletime(config[CONF_SAMPLETIME]))
