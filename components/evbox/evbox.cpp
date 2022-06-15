@@ -54,11 +54,14 @@ void EVBoxDevice::loop() {
   // Take a sample if time has passed
   if( (now - lastSample) > 1000.0*(this->sampletime_ ) )
   {
+    samplevalue_text_sensor_->publish_state( std::to_string(this->samplevalue_).c_str() )
+
     pid->Compute();
     lastSample = now;
 
+    charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
+ 
     // Send data 
-    ESP_LOGD(TAG, "samplevalue = %s", std::to_string(this->samplevalue_).c_str() );
 
     // Flow control to TX
     if (this->flow_control_pin_ != nullptr)
