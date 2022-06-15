@@ -23,9 +23,9 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   void set_max_cc(float max_charge_current) { this->max_charge_current_ = max_charge_current; }
   void set_sampletime(float sampletime) { this->sampletime_ = sampletime; }
   void set_samplevalue(float samplevalue) { this->samplevalue_ = samplevalue; }
-  void set_samplevalue_text_sensor(text_sensor::TextSensor *text_sensor) { this->samplevalue_text_sensor_ = text_sensor };
-  void set_charge_current_text_sensor(text_sensor::TextSensor *text_sensor) { this->charge_current_text_sensor_ = text_sensor };
-  void set_total_energy_text_sensor(text_sensor::TextSensor *text_sensor) { this->total_energy_text_sensor_ = text_sensor };
+  void set_samplevalue_text_sensor(text_sensor::TextSensor *text_sensor) { this->samplevalue_text_sensor_ = text_sensor; }
+  void set_charge_current_text_sensor(text_sensor::TextSensor *text_sensor) { this->charge_current_text_sensor_ = text_sensor; }
+  void set_total_energy_text_sensor(text_sensor::TextSensor *text_sensor) { this->total_energy_text_sensor_ = text_sensor; }
       |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
