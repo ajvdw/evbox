@@ -2,7 +2,7 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import text_sensor
 from esphome.const import (
-    CONF_ID, CONF_TOTAL_ENERGY
+    CONF_ID,
 )
 from . import CONF_EVBOX_ID, CONF_SAMPLEVALUE, CONF_SETPOINT, EVBOX_COMPONENT_SCHEMA
 
