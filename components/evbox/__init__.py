@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-
+from esphome import automation
 from esphome.cpp_helpers import gpio_pin_expression
 from esphome.components import uart, mqtt
 from esphome.const import (
