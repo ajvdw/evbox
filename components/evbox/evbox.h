@@ -38,7 +38,7 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   GPIOPin *flow_control_pin_{nullptr};
   text_sensor::TextSensor *samplevalue_text_sensor_{nullptr};
   text_sensor::TextSensor *charge_current_text_sensor_{nullptr};
-  text_sensor::TextSensor *total_energy_text_sensor{nullptr};
+  text_sensor::TextSensor *total_energy_text_sensor_{nullptr};
   bool receiving_;
   uint8_t received_data_[256];
   uint32_t received_len_;
