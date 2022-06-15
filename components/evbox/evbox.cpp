@@ -52,7 +52,7 @@ void EVBoxDevice::loop() {
   }    
 
   // Take a sample if time has passed
-  if( (now - lastSample)/1000 > (this->sampletime_ ) )
+  if( (now - lastSample)/1000 >= (this->sampletime_ ) )
   {
     pid->Compute();
     lastSample = now;
