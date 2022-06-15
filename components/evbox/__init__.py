@@ -43,7 +43,7 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_KI,default=0.1): cv.float_,
             cv.Optional(CONF_KD,default=0.05): cv.float_,
             cv.Optional(CONF_SAMPLETIME,default=1.0): cv.float_range(min=0.1, max=30.0),
-            cv.Optional(CONF_SAMPLEVALUE,default=0.0): cv.float_range(min=6.0, max=100000.0),
+            cv.Optional(CONF_SAMPLEVALUE,default=0.0): cv.float_range(min=0.0, max=100000.0),
             cv.Optional(CONF_SETPOINT,default=0.0): cv.float_range(min=0.0, max=100000.0),
         }
     )
