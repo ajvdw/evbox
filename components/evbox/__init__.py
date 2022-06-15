@@ -26,6 +26,9 @@ CONF_EVBOX_ID = "evbox_id"
 evbox_ns = cg.esphome_ns.namespace("esphome::mqtt::evbox")
 EVBoxDevice = evbox_ns.class_("EVBoxDevice", uart.UARTDevice, cg.Component)
 
+SetSampleValueAction = evbox_ns.class_("SetSampleValueAction", automation.Action)
+
+
 EVBOX_COMPONENT_SCHEMA = cv.COMPONENT_SCHEMA.extend(
     {
         cv.Required(CONF_EVBOX_ID): cv.use_id(EVBoxDevice),
@@ -43,7 +46,6 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_KI,default=0.1): cv.float_,
             cv.Optional(CONF_KD,default=0.05): cv.float_,
             cv.Optional(CONF_SAMPLETIME,default=1.0): cv.float_,
-            cv.Optional(CONF_SAMPLEVALUE,default=0.0): cv.float_,
             cv.Optional(CONF_SETPOINT,default=0.0): cv.float_,
         }
     )
@@ -68,9 +70,24 @@ async def to_code(config):
         cg.add(var.set_ki(config[CONF_KI]))
     if CONF_KD in config:
         cg.add(var.set_kd(config[CONF_KD]))
-    if CONF_SAMPLEVALUE in config:
-        cg.add(var.set_samplevalue(config[CONF_SAMPLEVALUE]))
     if CONF_SAMPLETIME in config:
         cg.add(var.set_sampletime(config[CONF_SAMPLETIME]))
     if CONF_SETPOINT in config:
         cg.add(var.set_setpoint(config[CONF_SETPOINT]))
+
+@automation.register_action(
+    "evbox.set_samplevalue",
+    SetSpeedAction,
+    cv.Schema(
+        {
+            cv.Required(CONF_ID): cv.use_id(EVBoxDevice),
+            cv.Required(CONF_SAMPLEVALUE): cv.templatable(validate_samplevalue),
+        }
+    ),
+)
+async def evbox_set_samplevalue_to_code(config, action_id, template_arg, args):
+    paren = await cg.get_variable(config[CONF_ID])
+    var = cg.new_Pvariable(action_id, template_arg, paren)
+    template_ = await cg.templatable(config[CONF_SAMPLEVALUE], args, cg.float_)
+    cg.add(var.set_samplevalue(template_))
+    return var
