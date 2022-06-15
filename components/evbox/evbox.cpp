@@ -2,7 +2,6 @@
 #include "pid.h"
 
 namespace esphome {
-namespace mqtt {
 namespace evbox {
 
 PID *pid;
@@ -13,10 +12,6 @@ void EVBoxDevice::setup() {
     this->flow_control_pin_->setup();
 
   ESP_LOGD(TAG, "Setup");
-
-  std::string command_topic = App.get_name() + std::string("/power/input");
-  this->subscribe(command_topic, &EVBoxDevice::on_mqtt_receive_);
-  ESP_LOGD(TAG, "MQTT subscribed to %s", command_topic.c_str());
 
   received_len_ = 0;
   receiving_ = false;
@@ -63,7 +58,8 @@ void EVBoxDevice::loop() {
     lastSample = now;
 
     // Send data 
-    
+    ESP_LOGD(TAG, "samplevalue = %s", std::to_string(this->samplevalue_).c_str() );
+
     // Flow control to TX
     if (this->flow_control_pin_ != nullptr)
       this->flow_control_pin_->digital_write(true);
@@ -74,26 +70,7 @@ void EVBoxDevice::loop() {
     if (this->flow_control_pin_ != nullptr) 
       this->flow_control_pin_->digital_write(false);
   }
-
-  // Broadcast verbose state every 5 seconds
-  if (now - lastMsg > 5000) {
-    lastMsg = now;
-    std::string topic = App.get_name() + "/current/state";
-    if (this->publish(topic, std::to_string(samplevalue_), 0, true))
-      ESP_LOGD(TAG, "Success sending MQTT state message");
-    else
-      ESP_LOGD(TAG, "Error sending MQTT state message");
-  }
 }
-
-void EVBoxDevice::on_mqtt_receive_(const std::string& topic, const std::string& payload) {
-  // do something with topic and payload
-  ESP_LOGD(TAG, "Payload %s on topic %s received", payload.c_str(), topic.c_str());
-  if (payload == "*REBOOT*")
-    ESP.restart();
-}
-
 
 }  // namespace evbox
-}  // namespace mqtt
 }  // namespace esphome

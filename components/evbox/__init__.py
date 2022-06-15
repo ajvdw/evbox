@@ -2,7 +2,7 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import automation
 from esphome.cpp_helpers import gpio_pin_expression
-from esphome.components import uart, mqtt
+from esphome.components import uart
 from esphome.const import (
     CONF_ID,
     CONF_FLOW_CONTROL_PIN,
@@ -23,7 +23,7 @@ DEPENDENCIES = ["uart"]
 
 CONF_EVBOX_ID = "evbox_id"
 
-evbox_ns = cg.esphome_ns.namespace("esphome::mqtt::evbox")
+evbox_ns = cg.esphome_ns.namespace("esphome::evbox")
 EVBoxDevice = evbox_ns.class_("EVBoxDevice", uart.UARTDevice, cg.Component)
 
 SetSampleValueAction = evbox_ns.class_("SetSampleValueAction", automation.Action)

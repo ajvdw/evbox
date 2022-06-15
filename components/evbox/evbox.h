@@ -7,15 +7,13 @@
 #include "esphome/core/helpers.h"
 #include "esphome/core/log.h"
 #include "esphome/components/uart/uart.h"
-#include "esphome/components/mqtt/custom_mqtt_device.h"
 
 static const char* const TAG = "evbox";
 
 namespace esphome {
-namespace mqtt {
 namespace evbox {
 
-class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, public Component {
+class EVBoxDevice : public uart::UARTDevice, public Component {
  public:
   void setup() override;
   void loop() override;
@@ -30,7 +28,6 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
   void set_kd(float kd) { this->kd_ = kd; }
  
  protected:
-  void on_mqtt_receive_(const std::string& topic, const std::string& payload);
   GPIOPin *flow_control_pin_{nullptr};
 
   bool receiving_;
@@ -46,7 +43,6 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
   double kp_;
   double ki_;
   double kd_;
-
 };
 
 template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
@@ -65,6 +61,5 @@ template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
 };
 
 }  // namespace evbox
-}  // namespace mqtt
 }  // namespace esphome
 
