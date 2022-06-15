@@ -79,7 +79,7 @@ void EVBoxDevice::loop() {
   if (now - lastMsg > 5000) {
     lastMsg = now;
     std::string topic = App.get_name() + "/current/state";
-    if (this->publish(topic, "24", 0, true))
+    if (this->publish(topic, string(samplevalue_), 0, true))
       ESP_LOGD(TAG, "Success sending MQTT state message");
     else
       ESP_LOGD(TAG, "Error sending MQTT state message");
