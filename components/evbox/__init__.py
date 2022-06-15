@@ -68,7 +68,7 @@ async def to_code(config):
         cg.add(var.set_ki(config[CONF_KI]))
     if CONF_KD in config:
         cg.add(var.set_kd(config[CONF_KD]))
-    if CONF_SACONF_SAMPLEVALUEMPLETIME in config:
+    if CONF_SAMPLEVALUE in config:
         cg.add(var.set_samplevalue(config[CONF_SAMPLEVALUE]))
     if CONF_SAMPLETIME in config:
         cg.add(var.set_sampletime(config[CONF_SAMPLETIME]))
