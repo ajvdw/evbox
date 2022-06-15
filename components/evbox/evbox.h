@@ -35,15 +35,15 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
   uint8_t received_data_[256];
   uint32_t received_len_;
 
-  float min_charge_current_;
-  float max_charge_current_;
-  float output_charge_current_;
-  float setpoint_;
-  float samplevalue_;
-  float sampletime_; 
-  float kp_;
-  float ki_;
-  float kd_;
+  double min_charge_current_;
+  double max_charge_current_;
+  double output_charge_current_;
+  double setpoint_;
+  double samplevalue_;
+  double sampletime_; 
+  double kp_;
+  double ki_;
+  double kd_;
 
 };
 
