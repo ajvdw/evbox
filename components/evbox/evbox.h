@@ -28,20 +28,6 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
   void set_kp(float kp) { this->kp_ = kp; }
   void set_ki(float ki) { this->ki_ = ki; }
   void set_kd(float kd) { this->kd_ = kd; }
-
- template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
- public:
-  explicit SetSampleValueAction(EVBoxDevice *parent) : parent_(parent) {}
-
-  TEMPLATABLE_VALUE(float, samplevalue);
-
-  void play(Ts... x) override {
-    float samplevalue = this->samplevalue.value(x...);
-  }
-
- protected:
-  EVBoxDevice *parent_;
-};
  
  protected:
   void on_mqtt_receive_(const std::string& topic, const std::string& payload);
@@ -66,3 +52,17 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
 }  // namespace evbox
 }  // namespace mqtt
 }  // namespace esphome
+
+template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
+    public:
+    explicit SetSampleValueAction(EVBoxDevice *parent) : parent_(parent) {}
+
+    TEMPLATABLE_VALUE(float, samplevalue);
+
+    void play(Ts... x) override {
+        float samplevalue = this->samplevalue.value(x...);
+    }
+
+    protected:
+    EVBoxDevice *parent_;
+};
