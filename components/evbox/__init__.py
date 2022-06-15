@@ -6,6 +6,7 @@ from esphome.components import uart, mqtt
 from esphome.const import (
     CONF_ID,
     CONF_FLOW_CONTROL_PIN,
+    CONF_VALUE,
 )
 from esphome import pins
 
