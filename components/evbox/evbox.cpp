@@ -21,7 +21,7 @@ void EVBoxDevice::setup() {
   received_len_ = 0;
   receiving_ = false;
 
-  pid = new PID(&(this->samlpevalue_), &(this->output_charge_current_), &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
+  pid = new PID(&(this->samplevalue_), &(this->output_charge_current_), &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
   pid->SetSampleTime(sampletime_*1000); // seconds
   pid->SetOutputLimits(min_charge_current_, max_charge_current_);
   pid->SetMode(AUTOMATIC);
@@ -44,12 +44,12 @@ void EVBoxDevice::loop() {
     }
     else if( c == 3 && received_len_ > 8) { // Message End 
       receiving_=false;
-      receive_data_[received_len_]=0;
+      received_data_[received_len_]=0;
       ESP_LOGD(TAG, "RX: %s", receive_data_ );
       received_len_=0;     
     }
     else if( receiving_ && c >= 48 && c<= 70 ) { // Capture message data
-      if( received_len_<255) receive_data_[received_len_++]=c;
+      if( received_len_<255) received_data_[received_len_++]=c;
     }
     else { // Invalid data
       received_len_=0;
