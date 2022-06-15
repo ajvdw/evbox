@@ -17,8 +17,8 @@ void EVBoxDevice::setup() {
   receiving_ = false;
 
   pid = new PID(&(this->samplevalue_), &(this->output_charge_current_), &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
-  pid->SetSampleTime(sampletime_*1000); // seconds
-  pid->SetOutputLimits(min_charge_current_, max_charge_current_);
+  pid->SetSampleTime(this->sampletime_ * 1000); 
+  pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
   pid->SetMode(AUTOMATIC);
 }
 
@@ -52,7 +52,7 @@ void EVBoxDevice::loop() {
   }    
 
   // Take a sample if time has passed
-  if( now - lastSample > this->sampletime_ )
+  if( (now - lastSample)/1000 > (this->sampletime_ ) )
   {
     pid->Compute();
     lastSample = now;
