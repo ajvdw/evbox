@@ -49,10 +49,6 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
 
 };
 
-}  // namespace evbox
-}  // namespace mqtt
-}  // namespace esphome
-
 template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
     public:
     explicit SetSampleValueAction(EVBoxDevice *parent) : parent_(parent) {}
@@ -60,9 +56,15 @@ template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
     TEMPLATABLE_VALUE(float, samplevalue);
 
     void play(Ts... x) override {
-        float samplevalue = this->samplevalue.value(x...);
+        float samplevalue = this->samplevalue_.value(x...);
+        this->parent_->set_samplevalue(samplevalue);
     }
-
+    
     protected:
     EVBoxDevice *parent_;
 };
+
+}  // namespace evbox
+}  // namespace mqtt
+}  // namespace esphome
+
