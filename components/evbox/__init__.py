@@ -62,8 +62,6 @@ async def to_code(config):
         cg.add(var.set_min_cc(config[CONF_MIN_CC]))
     if CONF_MAX_CC in config:
         cg.add(var.set_max_cc(config[CONF_MAX_CC]))
-    if CONF_SETPOINT in config:
-        cg.add(var.set_setpoint(config[CONF_SETPOINT]))
     if CONF_KP in config:
         cg.add(var.set_kp(config[CONF_KP]))
     if CONF_KI in config:
@@ -74,3 +72,5 @@ async def to_code(config):
         cg.add(var.set_sampletime(config[CONF_SAMPLETIME]))
     if CONF_SAMPLEVALUE in config:
         cg.add(var.set_samplevalue(config[CONF_SAMPLEVALUE]))
+    if CONF_SETPOINT in config:
+        cg.add(var.set_setpoint(config[CONF_SETPOINT]))
