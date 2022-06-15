@@ -2,18 +2,16 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import text_sensor
 from esphome.const import (
-    CONF_ID,
+    CONF_ID, CONF_TOTAL_ENERGY
 )
 from . import CONF_EVBOX_ID, CONF_SAMPLEVALUE, CONF_SETPOINT, EVBOX_COMPONENT_SCHEMA
 
-CONF_SETPOINT = "setpoint"
-CONF_SAMPLEVALUE = "sample_value"
 CONF_CHARGE_CURRENT = "charge_current"
 
 AUTO_LOAD = ["evbox"]
 
 TYPES = {
-    CONF_SETPOINT,
+    CONF_TOTAL_ENERGY,
     CONF_SAMPLEVALUE,
     CONF_CHARGE_CURRENT,
 }
@@ -26,7 +24,6 @@ CONFIG_SCHEMA = EVBOX_COMPONENT_SCHEMA.extend(
         for type in TYPES
     }
 )
-
 
 async def to_code(config):
     paren = await cg.get_variable(config[CONF_EVBOX_ID])
