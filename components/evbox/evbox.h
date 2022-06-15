@@ -22,6 +22,7 @@ class EVBoxDevice : public uart::UARTDevice, public mqtt::CustomMQTTDevice, publ
   void set_min_cc(float min_charge_current) { this->min_charge_current_ = min_charge_current; }
   void set_max_cc(float max_charge_current) { this->max_charge_current_ = max_charge_current; }
   void set_sampletime(float sampletime) { this->sampletime_ = sampletime; }
+  void set_samplevalue(float samplevalue) { this->samplevalue_ = samplevalue; }
   void set_setpoint(float setpoint) { this->setpoint_ = setpoint; }
   void set_kp(float kp) { this->kp_ = kp; }
   void set_ki(float ki) { this->ki_ = ki; }
