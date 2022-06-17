@@ -4,10 +4,6 @@
  * PID Library is licensed under a GPLv3 License
  **********************************************************************************************/
 #include "pid.h"
-//#include "esphome/core/defines.h"
-//#include "esphome/core/helpers.h"
-//#include "esphome/core/application.h"
-//#include "esphome/core/component.h"
 
 /*Constructor (...)*********************************************************
  * The parameters specified here are those for for which we can't set up
@@ -32,7 +28,6 @@ PID::PID(double* Input, double* Output, double* Setpoint,
  * To allow backwards compatability for v1.1, or for people that just want
  * to use Proportional on Error without explicitly saying so
  ***************************************************************************/
-
 PID::PID(double* Input, double* Output, double* Setpoint,
         double Kp, double Ki, double Kd, int ControllerDirection)
     :PID::PID(Input, Output, Setpoint, Kp, Ki, Kd, P_ON_E, ControllerDirection)

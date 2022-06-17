@@ -7,10 +7,13 @@ namespace evbox {
 PID *pid;
 
 void EVBoxDevice::setup() {
-  // Set flowcontrolpin
   if (this->flow_control_pin_ != nullptr)
+  {
+    // Set flowcontrolpin
     this->flow_control_pin_->setup();
-
+    // Flow control to RX
+    this->flow_control_pin_->digital_write(false);
+  }
   ESP_LOGD(TAG, "Setup");
 
   received_len_ = 0;
