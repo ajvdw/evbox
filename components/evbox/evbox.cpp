@@ -84,8 +84,8 @@ void EVBoxDevice::process_message_( uint8_t *msg )
       cx = cx ^ (msg[i]);
     }
 
-    uint8_t csm = (uint8_t)cs; 
-    uint8_t csx = (uint8_t)cs; 
+    uint8_t csm = (uint8_t)cm; 
+    uint8_t csx = (uint8_t)cx; 
 
     ESP_LOGD(TAG, "CS: %c %c %c %c", hex[csm >> 4], [csm & 15], hex[csx >> 4], hex[csx & 15]);
   }
