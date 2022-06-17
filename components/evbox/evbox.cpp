@@ -60,7 +60,7 @@ void EVBoxDevice::loop() {
   // Take a sample if time has passed
   if( (now - lastSample) > 1000.0*(this->sampletime_ ) )
   {
-    samplevalue_text_sensor_->publish_state( std::to_string(this->samplevalue_).c_str() );
+    samplevalue_text_sensor_->publish_state( std::to_string( this->samplevalue_).c_str() );
 
     pid->Compute();
     lastSample = now;
@@ -69,7 +69,6 @@ void EVBoxDevice::loop() {
     charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
   }
 }
-
 
 void EVBoxDevice::send_max_current_( float amp ) {
   // MaxChargingCurrent command
