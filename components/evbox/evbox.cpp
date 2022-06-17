@@ -35,6 +35,7 @@ void EVBoxDevice::loop() {
   if (this->available()) {
     uint8_t c;
     this->read_byte(&c);
+    ESP_LOGD(TAG, "RX: %d", c );
 
     if( c == 2 ) { // Message Start  
        receiving_=true;
