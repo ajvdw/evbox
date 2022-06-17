@@ -81,5 +81,49 @@ void EVBoxDevice::loop() {
   }
 }
 
+
+void EVBoxDevice::send_max_current_( float amp ) {
+  // MaxChargingCurrent command
+  char buf[] = "80A06900__00__00__" ;   
+  int  ta = round(10*amp);
+  char hex[] = "0123456789ABCDEF";
+
+  // Set current values (fill in the blanks)
+  buf[8]=buf[12]=buf[16]=hex[(ta >> 4) & 15];
+  buf[9]=buf[13]=buf[17]=hex[(ta >> 0) & 15];
+
+  // Calc checksum
+  int cs;
+  
+  cs = 0; 
+  for (int i = 0; s[i]; i++) cs = (cs + s[i]) & 255;
+  uint8_t csm = (uint8_t)cs; 
+
+  cs = 0; 
+  for (int i = 0; s[i]; i++) cs = cs ^ (s[i]);
+  uint8_t csx = (uint8_t)cs; 
+
+  if (this->flow_control_pin_ != nullptr) 
+    this->flow_control_pin_->digital_write(true); // TX mode 
+
+  uint8_t c;
+
+  // StartOfMessage
+  c = 2; this->write_byte(&c);
+  // Actual Message
+  this->write_bytes(buf,18);  
+  // Add checksum to message
+  c = hex[csm >> 4];  this->write_byte(&c);
+  c = hex[csm & 15];  this->write_byte(&c);
+  c = hex[csx >> 4];  this->write_byte(&c);
+  c = hex[csx & 15];  this->write_byte(&c);  
+  // EndOfMessage
+  c = 3; this->write_byte(&c);
+  this->flush();
+
+  if (this->flow_control_pin_ != nullptr) 
+    this->flow_control_pin_->digital_write(false); // RX mode 
+}
+
 }  // namespace evbox
 }  // namespace esphome
