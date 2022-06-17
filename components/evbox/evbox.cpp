@@ -58,13 +58,13 @@ void EVBoxDevice::loop() {
   // Take a sample if time has passed
   if( (now - lastSample) > 1000.0*(this->sampletime_ ) )
   {
-    samplevalue_text_sensor_->publish_state( std::to_string(this->samplevalue_).c_str() );
+    samplevalue_text_sensor_->publish_state( std::to_string(this->samplevalue_,1).c_str() );
 
     pid->Compute();
     lastSample = now;
 
     send_max_current_( this->output_charge_current_);
-    charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
+    charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_,1).c_str() );
   }
 }
 
@@ -87,6 +87,8 @@ void EVBoxDevice::process_message_( char *msg )
 
     uint8_t csm = (uint8_t)cm; 
     uint8_t csx = (uint8_t)cx; 
+
+    // Checksum and header validation
     if( hex[csm >> 4] == msg[msglen-4] && hex[csm & 15] == msg[msglen-3] && 
         hex[csx >> 4] == msg[msglen-2] && hex[csx & 15] == msg[msglen-1] && 
         strncmp( msg, "A08069", 6  ) == 0 )
@@ -106,7 +108,7 @@ void EVBoxDevice::process_message_( char *msg )
         factor = factor / 16; 
       }
       this->total_energy_ = m /1000;
-      total_energy_text_sensor_->publish_state( std::to_string(this->total_energy_).c_str() );
+      total_energy_text_sensor_->publish_state( std::to_string(this->total_energy_,1).c_str() );
     }
   }
   //ESP_LOGD(TAG, "RX: %s", msg );
