@@ -58,13 +58,13 @@ void EVBoxDevice::loop() {
   // Take a sample if time has passed
   if( (now - lastSample) > 1000.0*(this->sampletime_ ) )
   {
-    samplevalue_text_sensor_->publish_state( std::to_string(this->samplevalue_).c_str(),1 );
+    samplevalue_text_sensor_->publish_state( std::to_string(this->samplevalue_).c_str() );
 
     pid->Compute();
     lastSample = now;
 
     send_max_current_( this->output_charge_current_);
-    charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str(),1 );
+    charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
   }
 }
 
@@ -108,7 +108,7 @@ void EVBoxDevice::process_message_( char *msg )
         factor = factor / 16; 
       }
       this->total_energy_ = m /1000;
-      total_energy_text_sensor_->publish_state( std::to_string(this->total_energy_).c_str(),1 );
+      total_energy_text_sensor_->publish_state( std::to_string(this->total_energy_).c_str() );
     }
   }
   //ESP_LOGD(TAG, "RX: %s", msg );
