@@ -96,7 +96,6 @@ void EVBoxDevice::process_message_( char *msg )
     metered[8]=0;
     
     ESP_LOGD(TAG, "MV: %s", metered );
-    ESP_LOGD(TAG, "CS: %s", checksum );
   }
 
   ESP_LOGD(TAG, "RX: %s", msg );
