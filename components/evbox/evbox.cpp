@@ -71,6 +71,7 @@ void EVBoxDevice::loop() {
 void EVBoxDevice::process_message_( uint8_t *msg )
 {
   int i;
+  char checksum[] = "____";
   
   // Calc checksum
   if( strlen(msg) > 12 )
@@ -87,7 +88,12 @@ void EVBoxDevice::process_message_( uint8_t *msg )
     uint8_t csm = (uint8_t)cm; 
     uint8_t csx = (uint8_t)cx; 
 
-    ESP_LOGD(TAG, "CS: %c %c %c %c", hex[csm >> 4], [csm & 15], hex[csx >> 4], hex[csx & 15]);
+    checksum[0] = hex[csm >> 4];
+    checksum[1] = hex[csm & 15];
+    checksum[2] = hex[csx >> 4];
+    checksum[3] = hex[csx & 15];
+
+    ESP_LOGD(TAG, "CS: %s", checksum );
   }
 
   ESP_LOGD(TAG, "RX: %s", msg );
