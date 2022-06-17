@@ -91,6 +91,8 @@ void EVBoxDevice::send_max_current_( float amp ) {
   for (int i = 0; buf[i]; i++) cs = cs ^ (buf[i]);
   uint8_t csx = (uint8_t)cs; 
 
+  ESP_LOGD(TAG, "Send charge current");
+
   if (this->flow_control_pin_ != nullptr) 
     this->flow_control_pin_->digital_write(true); // TX mode 
 
