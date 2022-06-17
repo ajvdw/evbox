@@ -1,6 +1,6 @@
 # evbox
 
-''' 
+```
 substitutions:
   device_name: "laadpunt"
   device_description: "EVBox"
@@ -86,4 +86,4 @@ wifi:
     ssid: ${device_name}
 
 captive_portal:
-'''
+```
