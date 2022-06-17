@@ -70,7 +70,6 @@ void EVBoxDevice::loop() {
 void EVBoxDevice::process_message_( char *msg )
 {
   int i;
-  char metered[13];
   int msglen = strlen(msg);
 
   // Calc checksum
@@ -87,15 +86,33 @@ void EVBoxDevice::process_message_( char *msg )
 
     uint8_t csm = (uint8_t)cm; 
     uint8_t csx = (uint8_t)cx; 
-
     if( hex[csm >> 4] == msg[msglen-4] && hex[csm & 15] == msg[msglen-3] && hex[csx >> 4] == msg[msglen-2] && hex[csx & 15] == msg[msglen-1] )
     {
-        ESP_LOGD(TAG, "CHECKSUM OK" );
+      ESP_LOGD(TAG, "CHECKSUM OK" );
     }
-    strcpy( metered, &msg[msglen-12]) ;
-    metered[8]=0;
+
+    if( strncmp( msg, "A08069", 6  ) == 0 )
+    {
+      ESP_LOGD(TAG, "HEADER OK" );
+    }
+
     
-    ESP_LOGD(TAG, "MV: %s", metered );
+    double m=0;
+    long factor = 268435456;
+    for( i = msglen-12; i<msglen-4; i++)
+    {
+      char c = msg[i];
+      int v = 0;
+      if( c >= '0' && c <= '9')
+        v = c -'0';
+      if( c >= 'A' && c <= 'F' )
+        v = c - 'A' + 10;
+      m = m + factor * v;
+      factor = factor / 16; 
+    }
+    ESP_LOGD(TAG, "METERED: %d", m );
+
+
   }
 
   ESP_LOGD(TAG, "RX: %s", msg );
