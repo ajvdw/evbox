@@ -31,7 +31,6 @@ void EVBoxDevice::loop() {
   static uint32_t lastSample=now;
   static uint32_t lastMsg=0;
 
-
   // Capture EVBox data and just print it
   if (this->available()) {
     uint8_t c;
@@ -72,14 +71,16 @@ void EVBoxDevice::process_message_( char *msg )
 {
   int i;
   char checksum[] = "____";
-  
+  char metered[13];
+  int msglen = strlen(msg);
+
   // Calc checksum
-  if( strlen(msg) > 12 )
+  if( msglen > 12 )
   {
     int cm = 0; 
     int cx = 0; 
     
-    for(i=0; i<strlen(msg)-4; i++ )
+    for(i=0; i<msglen-4; i++ )
     {
       cm = (cm + msg[i]) & 255;
       cx = cx ^ (msg[i]);
@@ -93,6 +94,14 @@ void EVBoxDevice::process_message_( char *msg )
     checksum[2] = hex[csx >> 4];
     checksum[3] = hex[csx & 15];
 
+    if( checksum[0] == msg[msglen-4] && checksum[1] == msg[msglen-3] && checksum[2] == msg[msglen-2] && checksum[3] == msg[msglen-1] )
+    {
+        ESP_LOGD(TAG, "CHECKSUM OK" );
+    }
+    strcpy( metered, &msg[msglen-12] ;
+    metered[8]=0;
+    
+    ESP_LOGD(TAG, "MV: %s", metered );
     ESP_LOGD(TAG, "CS: %s", checksum );
   }
 
