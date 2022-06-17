@@ -5,6 +5,7 @@ namespace esphome {
 namespace evbox {
 
 PID *pid;
+const char hex[] = "0123456789ABCDEF";
 
 void EVBoxDevice::setup() {
   if (this->flow_control_pin_ != nullptr)
@@ -69,6 +70,26 @@ void EVBoxDevice::loop() {
 
 void EVBoxDevice::process_message_( uint8_t *msg )
 {
+  int i;
+  
+  // Calc checksum
+  if( strlen(msg) > 12 )
+  {
+    int cm = 0; 
+    int cx = 0; 
+    
+    for(i=0; i<strlen(msg)-4; i++ )
+    {
+      cm = (cm + msg[i]) & 255;
+      cx = cx ^ (msg[i]);
+    }
+
+    uint8_t csm = (uint8_t)cs; 
+    uint8_t csx = (uint8_t)cs; 
+
+    ESP_LOGD(TAG, "CS: %c %c %c %c", hex[csm >> 4], [csm & 15], hex[csx >> 4], hex[csx & 15]);
+  }
+
   ESP_LOGD(TAG, "RX: %s", msg );
 }
 
@@ -76,8 +97,7 @@ void EVBoxDevice::send_max_current_( float amp ) {
   // MaxChargingCurrent command
   char buf[] = "80A06900__00__00__" ;   
   int  ta = round(10*amp);
-  char hex[] = "0123456789ABCDEF";
-
+ 
   // Set current values (fill in the blanks)
   buf[8]=buf[12]=buf[16]=hex[(ta >> 4) & 15];
   buf[9]=buf[13]=buf[17]=hex[(ta >> 0) & 15];
