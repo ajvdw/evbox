@@ -18,6 +18,7 @@ void EVBoxDevice::setup() {
   ESP_LOGD(TAG, "Setup");
 
   received_len_ = 0;
+  total_energy_ 0;
   receiving_ = false;
 
   pid = new PID(&(this->samplevalue_), &(this->output_charge_current_), &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
@@ -86,36 +87,29 @@ void EVBoxDevice::process_message_( char *msg )
 
     uint8_t csm = (uint8_t)cm; 
     uint8_t csx = (uint8_t)cx; 
-    if( hex[csm >> 4] == msg[msglen-4] && hex[csm & 15] == msg[msglen-3] && hex[csx >> 4] == msg[msglen-2] && hex[csx & 15] == msg[msglen-1] )
+    if( hex[csm >> 4] == msg[msglen-4] && hex[csm & 15] == msg[msglen-3] && 
+        hex[csx >> 4] == msg[msglen-2] && hex[csx & 15] == msg[msglen-1] && 
+        strncmp( msg, "A08069", 6  ) == 0 )
     {
-      ESP_LOGD(TAG, "CHECKSUM OK" );
+  
+      double m=0;
+      long factor = 268435456;
+      for( i = msglen-12; i<msglen-4; i++)
+      {
+        char c = msg[i];
+        int v = 0;
+        if( c >= '0' && c <= '9')
+          v = c -'0';
+        if( c >= 'A' && c <= 'F' )
+          v = c - 'A' + 10;
+        m = m + factor * v;
+        factor = factor / 16; 
+      }
+      this->total_energy_ = m /1000;
+      total_energy_text_sensor_->publish_state( std::to_string(this->total_energy_).c_str() );
     }
-
-    if( strncmp( msg, "A08069", 6  ) == 0 )
-    {
-      ESP_LOGD(TAG, "HEADER OK" );
-    }
-
-    
-    double m=0;
-    long factor = 268435456;
-    for( i = msglen-12; i<msglen-4; i++)
-    {
-      char c = msg[i];
-      int v = 0;
-      if( c >= '0' && c <= '9')
-        v = c -'0';
-      if( c >= 'A' && c <= 'F' )
-        v = c - 'A' + 10;
-      m = m + factor * v;
-      factor = factor / 16; 
-    }
-    ESP_LOGD(TAG, "METERED: %lf", m );
-
-
   }
-
-  ESP_LOGD(TAG, "RX: %s", msg );
+  //ESP_LOGD(TAG, "RX: %s", msg );
 }
 
 void EVBoxDevice::send_max_current_( float amp ) {
