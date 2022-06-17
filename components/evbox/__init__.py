@@ -83,7 +83,7 @@ async def to_code(config):
     cv.Schema(
         {
             cv.Required(CONF_ID): cv.use_id(EVBoxDevice),
-            cv.Required(CONF_SAMPLEVALUE): cv.templatable( ),
+            cv.Required(CONF_SAMPLEVALUE): cv.templatable( cv.float_ ),
         }
     ),
 )
