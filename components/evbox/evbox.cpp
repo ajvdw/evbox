@@ -93,7 +93,7 @@ void EVBoxDevice::process_message_( char *msg )
         hex[csx >> 4] == msg[msglen-2] && hex[csx & 15] == msg[msglen-1] && 
         strncmp( msg, "A08069", 6  ) == 0 )
     {
-  
+      // Read MID meter from EVSE
       double m=0;
       long factor = 268435456;
       for( i = msglen-12; i<msglen-4; i++)
