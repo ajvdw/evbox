@@ -34,7 +34,7 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
  
  protected:
   void send_max_current_( float amp );
-  void process_message_( uint8_t *msg );
+  void process_message_( char *msg );
  
   GPIOPin *flow_control_pin_{nullptr};
   text_sensor::TextSensor *samplevalue_text_sensor_{nullptr};

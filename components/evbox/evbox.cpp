@@ -68,7 +68,7 @@ void EVBoxDevice::loop() {
   }
 }
 
-void EVBoxDevice::process_message_( uint8_t *msg )
+void EVBoxDevice::process_message_( char *msg )
 {
   int i;
   char checksum[] = "____";
