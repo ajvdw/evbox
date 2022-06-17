@@ -44,7 +44,7 @@ void EVBoxDevice::loop() {
     else if( c == 3 && received_len_ > 8) { // Message End 
       receiving_=false;
       received_data_[received_len_]=0;
-      process_message_(received_data_);
+      process_message_( (char *)received_data_);
       received_len_=0;   
     }
     else if( receiving_ && c >= 48 && c<= 70 ) { // Capture message data
@@ -63,7 +63,7 @@ void EVBoxDevice::loop() {
     pid->Compute();
     lastSample = now;
 
-    send_max_current_( (char *)this->output_charge_current_);
+    send_max_current_( this->output_charge_current_);
     charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
   }
 }
