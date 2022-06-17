@@ -12,7 +12,7 @@ void EVBoxDevice::setup() {
     // Set flowcontrolpin
     this->flow_control_pin_->setup();
     // Flow control to RX
-    this->flow_control_pin_->digital_write(false);
+    this->flow_control_pin_->digital_write(0);
   }
   ESP_LOGD(TAG, "Setup");
 
@@ -94,7 +94,10 @@ void EVBoxDevice::send_max_current_( float amp ) {
   ESP_LOGD(TAG, "Send charge current");
 
   if (this->flow_control_pin_ != nullptr) 
-    this->flow_control_pin_->digital_write(true); // TX mode 
+  {
+    ESP_LOGD(TAG, "TXMode");
+    this->flow_control_pin_->digital_write(1); // TX mode 
+  }
 
   // StartOfMessage
   this->write_byte(2);
@@ -110,7 +113,10 @@ void EVBoxDevice::send_max_current_( float amp ) {
   this->flush();
 
   if (this->flow_control_pin_ != nullptr) 
-    this->flow_control_pin_->digital_write(false); // RX mode 
+  {
+    this->flow_control_pin_->digital_write(0); // RX mode 
+    ESP_LOGD(TAG, "RXMode");
+  }
 }
 
 }  // namespace evbox

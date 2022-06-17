@@ -62,6 +62,7 @@ async def to_code(config):
     await uart.register_uart_device(var, config)
     if CONF_FLOW_CONTROL_PIN in config:
         pin = await gpio_pin_expression(config[CONF_FLOW_CONTROL_PIN])
+        cg.add(var.set_flow_control_pin(pin))
     if CONF_MIN_CC in config:
         cg.add(var.set_min_cc(config[CONF_MIN_CC]))
     if CONF_MAX_CC in config:
