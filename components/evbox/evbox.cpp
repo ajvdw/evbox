@@ -110,7 +110,7 @@ void EVBoxDevice::process_message_( char *msg )
       m = m + factor * v;
       factor = factor / 16; 
     }
-    ESP_LOGD(TAG, "METERED: %d", m );
+    ESP_LOGD(TAG, "METERED: %lf", m );
 
 
   }
