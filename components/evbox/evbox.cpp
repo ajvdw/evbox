@@ -36,7 +36,6 @@ void EVBoxDevice::loop() {
     uint8_t c;
     this->read_byte(&c);
 
-
     if( c == 2 ) { // Message Start  
        receiving_=true;
        received_len_=0;
@@ -44,7 +43,7 @@ void EVBoxDevice::loop() {
     else if( c == 3 && received_len_ > 8) { // Message End 
       receiving_=false;
       received_data_[received_len_]=0;
-      ESP_LOGD(TAG, "RX: %s", received_data_ );
+      process_message_(received_data_);
       received_len_=0;   
     }
     else if( receiving_ && c >= 48 && c<= 70 ) { // Capture message data
@@ -58,7 +57,7 @@ void EVBoxDevice::loop() {
   // Take a sample if time has passed
   if( (now - lastSample) > 1000.0*(this->sampletime_ ) )
   {
-    samplevalue_text_sensor_->publish_state( std::to_string( this->samplevalue_).c_str() );
+    samplevalue_text_sensor_->publish_state( std::to_string(this->samplevalue_).c_str() );
 
     pid->Compute();
     lastSample = now;
@@ -66,6 +65,11 @@ void EVBoxDevice::loop() {
     send_max_current_(this->output_charge_current_);
     charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
   }
+}
+
+void EVBoxDevice::process_message_( uint8_t *msg )
+{
+  ESP_LOGD(TAG, "RX: %s", msg );
 }
 
 void EVBoxDevice::send_max_current_( float amp ) {
