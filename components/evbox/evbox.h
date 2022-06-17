@@ -61,6 +61,7 @@ template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
     void play(Ts... x) override {
         float samplevalue = this->samplevalue_.value(x...);
         this->parent_->set_samplevalue(samplevalue);
+ESP_LOGD(TAG, "#set_samplevalue: %lf", samplevalue );
     }
     
     protected:
