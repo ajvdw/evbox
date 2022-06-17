@@ -84,29 +84,27 @@ void EVBoxDevice::send_max_current_( float amp ) {
   int cs;
   
   cs = 0; 
-  for (int i = 0; s[i]; i++) cs = (cs + s[i]) & 255;
+  for (int i = 0; buf[i]; i++) cs = (cs + buf[i]) & 255;
   uint8_t csm = (uint8_t)cs; 
 
   cs = 0; 
-  for (int i = 0; s[i]; i++) cs = cs ^ (s[i]);
+  for (int i = 0; buf[i]; i++) cs = cs ^ (buf[i]);
   uint8_t csx = (uint8_t)cs; 
 
   if (this->flow_control_pin_ != nullptr) 
     this->flow_control_pin_->digital_write(true); // TX mode 
 
-  uint8_t c;
-
   // StartOfMessage
-  c = 2; this->write_byte(&c);
+  this->write_byte(2);
   // Actual Message
   this->write_bytes((uint8_t *)buf,18);  
   // Add checksum to message
-  c = hex[csm >> 4];  this->write_byte(&c);
-  c = hex[csm & 15];  this->write_byte(&c);
-  c = hex[csx >> 4];  this->write_byte(&c);
-  c = hex[csx & 15];  this->write_byte(&c);  
+  this->write_byte(hex[csm >> 4]);
+  this->write_byte(hex[csm & 15]);
+  this->write_byte(hex[csx >> 4]);
+  this->write_byte(hex[csx & 15]);  
   // EndOfMessage
-  c = 3; this->write_byte(&c);
+  this->write_byte(2);
   this->flush();
 
   if (this->flow_control_pin_ != nullptr) 
