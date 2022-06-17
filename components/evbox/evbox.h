@@ -27,8 +27,6 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   void set_charge_current_text_sensor(text_sensor::TextSensor *text_sensor) { this->charge_current_text_sensor_ = text_sensor; }
   void set_total_energy_text_sensor(text_sensor::TextSensor *text_sensor) { this->total_energy_text_sensor_ = text_sensor; }
 
-
-
   void set_setpoint(float setpoint) { this->setpoint_ = setpoint; }
   void set_kp(float kp) { this->kp_ = kp; }
   void set_ki(float ki) { this->ki_ = ki; }
