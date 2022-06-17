@@ -93,11 +93,7 @@ void EVBoxDevice::send_max_current_( float amp ) {
 
   ESP_LOGD(TAG, "Send charge current");
 
-  if (this->flow_control_pin_ != nullptr) 
-  {
-    ESP_LOGD(TAG, "TXMode");
-    this->flow_control_pin_->digital_write(1); // TX mode 
-  }
+  if (this->flow_control_pin_ != nullptr) this->flow_control_pin_->digital_write(1); // TX mode 
 
   // StartOfMessage
   this->write_byte(2);
@@ -109,14 +105,10 @@ void EVBoxDevice::send_max_current_( float amp ) {
   this->write_byte(hex[csx >> 4]);
   this->write_byte(hex[csx & 15]);  
   // EndOfMessage
-  this->write_byte(2);
+  this->write_byte(3);
   this->flush();
 
-  if (this->flow_control_pin_ != nullptr) 
-  {
-    this->flow_control_pin_->digital_write(0); // RX mode 
-    ESP_LOGD(TAG, "RXMode");
-  }
+  if (this->flow_control_pin_ != nullptr) this->flow_control_pin_->digital_write(0); // RX mode 
 }
 
 }  // namespace evbox
