@@ -65,19 +65,8 @@ void EVBoxDevice::loop() {
     pid->Compute();
     lastSample = now;
 
+    send_max_current_(this->output_charge_current_);
     charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
- 
-    // Send data 
-
-    // Flow control to TX
-    if (this->flow_control_pin_ != nullptr)
-      this->flow_control_pin_->digital_write(true);
-    // this->write_array((uint8_t *) send_data, 10);
-    // Wait until complete
-    this->flush(); 
-    // Flow control to RX
-    if (this->flow_control_pin_ != nullptr) 
-      this->flow_control_pin_->digital_write(false);
   }
 }
 
@@ -111,7 +100,7 @@ void EVBoxDevice::send_max_current_( float amp ) {
   // StartOfMessage
   c = 2; this->write_byte(&c);
   // Actual Message
-  this->write_bytes(buf,18);  
+  this->write_bytes((uint8_t *)buf,18);  
   // Add checksum to message
   c = hex[csm >> 4];  this->write_byte(&c);
   c = hex[csm & 15];  this->write_byte(&c);
