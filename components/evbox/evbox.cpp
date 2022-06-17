@@ -18,7 +18,7 @@ void EVBoxDevice::setup() {
   ESP_LOGD(TAG, "Setup");
 
   received_len_ = 0;
-  total_energy_ 0;
+  total_energy_ = 0;
   receiving_ = false;
 
   pid = new PID(&(this->samplevalue_), &(this->output_charge_current_), &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
