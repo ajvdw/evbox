@@ -63,7 +63,7 @@ void EVBoxDevice::loop() {
     pid->Compute();
     lastSample = now;
 
-    send_max_current_(this->output_charge_current_);
+    send_max_current_( (char *)this->output_charge_current_);
     charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
   }
 }
