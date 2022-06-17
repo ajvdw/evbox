@@ -97,7 +97,7 @@ void EVBoxDevice::send_max_current_( float amp ) {
   // StartOfMessage
   this->write_byte(2);
   // Actual Message
-  this->write_bytes((uint8_t *)buf,18);  
+  this->write_array((uint8_t *)buf,18);  
   // Add checksum to message
   this->write_byte(hex[csm >> 4]);
   this->write_byte(hex[csm & 15]);
