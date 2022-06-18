@@ -59,7 +59,8 @@ void EVBoxDevice::loop() {
   // Take a sample if time has passed
   if( (now - lastSample) > 1000.0*(this->sampletime_ ) )
   {
-    samplevalue_text_sensor_->publish_state( std::to_string(this->samplevalue_).c_str() );
+    if() samplevalue_text_sensor_)
+      samplevalue_text_sensor_->publish_state( std::to_string(this->samplevalue_).c_str() );
 
     pid->Compute();
     lastSample = now;
