@@ -24,7 +24,7 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   void set_max_cc(float max_charge_current) { this->max_charge_current_ = max_charge_current; }
   void set_sampletime(float sampletime) { this->sampletime_ = sampletime; }
   void set_samplevalue(float samplevalue) { this->samplevalue_ = samplevalue; }
-  void set_samplevalue_text_sensor(text_sensor::TextSensor *text_sensor) { this->samplevalue_text_sensor_ = text_sensor; }
+  void set_samplevalue_sensor(sensor::Sensor *sensor) { this->samplevalue_sensor_ = sensor; }
   void set_charge_current_sensor(sensor::Sensor *sensor) { this->charge_current_sensor_ = sensor; }
   void set_total_energy_sensor(sensor::Sensor *sensor) { this->total_energy_sensor_ = sensor; }
 
@@ -38,7 +38,7 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   void process_message_( char *msg );
  
   GPIOPin *flow_control_pin_{nullptr};
-  text_sensor::TextSensor *samplevalue_text_sensor_{nullptr};
+  sensor::Sensor *samplevalue_sensor_{nullptr};
   sensor::Sensor *charge_current_sensor_{nullptr};
   sensor::Sensor *total_energy_sensor_{nullptr};
   bool receiving_;
