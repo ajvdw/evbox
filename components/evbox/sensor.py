@@ -30,8 +30,9 @@ TYPES = { CONF_CHARGE_CURRENT: sensor.sensor_schema(
             device_class=DEVICE_CLASS_ENERGY,
             state_class=STATE_CLASS_TOTAL_INCREASING, 
             ),
-         CONF_SAMPLEVALUE: sensor.sensor_schma(
+         CONF_SAMPLEVALUE: sensor.sensor_schema(
             state_class=STATE_CLASS_MEASUREMENT,
+            accuracy_decimals=1,
             ), 
         }
 
