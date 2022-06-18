@@ -11,7 +11,7 @@ from esphome.const import (
     UNIT_WATT_HOURS,
 )
 
-from . import CONF_EVBOX_ID, EVBOX_COMPONENT_SCHEMA
+from . import CONF_EVBOX_ID, EVBOX_COMPONENT_SCHEMA, CONF_SAMPLEVALUE
 
 CONF_CHARGE_CURRENT = "charge_current"
 CONF_TOTAL_ENERGY = "total_energy"
