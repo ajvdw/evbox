@@ -13,17 +13,45 @@ from esphome.const import (
 
 from . import CONF_EVBOX_ID, EVBOX_COMPONENT_SCHEMA, CONF_SAMPLEVALUE
 
-CONF_CHARGE_CURRENT = "charge_current"
+CONF_CALCULATED_CURRENT = "calculated_current"
+CONF_REQUESTED_CURRENT = "requested_current"
+CONF_PHASE1_CURRENT = "phase1_current"
+CONF_PHASE2_CURRENT = "phase2_current"
+CONF_PHASE3_CURRENT = "phase3_current"
 CONF_TOTAL_ENERGY = "total_energy"
 
 AUTO_LOAD = ["evbox"]
 
-TYPES = { CONF_CHARGE_CURRENT: sensor.sensor_schema( 
+TYPES = { CONF_CALCULATED_CURRENT: sensor.sensor_schema( 
             unit_of_measurement=UNIT_AMPERE,
             accuracy_decimals=1,
             device_class=DEVICE_CLASS_CURRENT,
             state_class=STATE_CLASS_MEASUREMENT, 
             ),
+          CONF_REQUESTED_CURRENT: sensor.sensor_schema( 
+            unit_of_measurement=UNIT_AMPERE,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_CURRENT,
+            state_class=STATE_CLASS_MEASUREMENT, 
+            ),
+          CONF_PHASE1_CURRENT: sensor.sensor_schema( 
+            unit_of_measurement=UNIT_AMPERE,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_CURRENT,
+            state_class=STATE_CLASS_MEASUREMENT, 
+            ),
+          CONF_PHASE2_CURRENT: sensor.sensor_schema( 
+            unit_of_measurement=UNIT_AMPERE,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_CURRENT,
+            state_class=STATE_CLASS_MEASUREMENT, 
+            ),  
+          CONF_PHASE3_CURRENT: sensor.sensor_schema( 
+            unit_of_measurement=UNIT_AMPERE,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_CURRENT,
+            state_class=STATE_CLASS_MEASUREMENT, 
+            ),  
           CONF_TOTAL_ENERGY: sensor.sensor_schema( 
             unit_of_measurement=UNIT_WATT_HOURS,
             accuracy_decimals=0,

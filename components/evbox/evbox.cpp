@@ -70,9 +70,10 @@ void EVBoxDevice::loop() {
 
     if( !std::isnan( this->output_charge_current_ ) )
     send_max_current_( this->output_charge_current_);
+    
+    if(calculated_current_sensor_)
+      calculated_current_sensor_->publish_state( this->output_charge_current_ );
 
-    if(charge_current_sensor_)
-      charge_current_sensor_->publish_state( this->output_charge_current_ );
   }
 }
 
@@ -84,7 +85,7 @@ void EVBoxDevice::process_message_( char *msg )
   ESP_LOGD(TAG, "RX: %s", msg );
 
   // Calc checksum
-  if( msglen > 12 )
+  if( msglen == 56 )
   {
     int cm = 0; 
     int cx = 0; 
@@ -104,32 +105,33 @@ void EVBoxDevice::process_message_( char *msg )
         strncmp( msg, "A08069", 6  ) == 0 )
     {
       // Read MID meter from EVSE
-      double m=0;
       char meter[9];
-
       strncpy( meter, &msg[msglen-12], 8 );
       meter[8]=0;
-      m = strtoul(meter, NULL, 16);
-      
-  /*    
-      m=0;
-      long factor = 268435456;
-      for( i = msglen-12; i<msglen-4; i++)
-      {
-        char c = msg[i];
-        int v = 0;
-        if( c >= '0' && c <= '9')
-          v = c -'0';
-        if( c >= 'A' && c <= 'F' )
-          v = c - 'A' + 10;
-        m = m + factor * v;
-        factor = factor / 16; 
-      }
-  */
 
-      this->total_energy_ = m;
+      this->total_energy_ = strtoul(meter, NULL, 16);
       if( total_energy_sensor_ )
         total_energy_sensor_->publish_state( this->total_energy_ );
+
+      char current[5];
+      current[4]=0;
+
+      strncpy( current, &msg[16], 4 );
+      if(requested_current_sensor_)
+        requested_current_sensor_->publish_state( 0.1 * strtoul(current, NULL, 16) );
+
+      strncpy( current, &msg[20], 4 );
+      if(phase1_current_sensor_)
+        phase1_current_sensor_->publish_state( 0.1 * strtoul(current, NULL, 16) );
+
+      strncpy( current, &msg[24], 4 );
+      if(phase2_current_sensor_)
+        phase2_current_sensor_->publish_state( 0.1 * strtoul(current, NULL, 16) );
+
+      strncpy( current, &msg[28], 4 );
+      if(phase3_current_sensor_)
+        phase3_current_sensor_->publish_state( 0.1 * strtoul(current, NULL, 16) );
+
     }
   }
   //ESP_LOGD(TAG, "RX: %s", msg );
