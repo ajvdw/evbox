@@ -63,26 +63,8 @@ void EVBoxDevice::loop() {
     pid->Compute();
     lastSample = now;
 
-    static uint32_t pause = 0;
-
-    double current = this->output_charge_current_;
-
-    if( pause > 0 )
-    {
-      current = 0;
-      pause --;
-    }
-
-    if( current < 5 )
-    {
-      current = 0; // Switch off
-      pause = 300; // Pause 300 sampletimes
-    }
-    else if( current < 6 )
-      current = 6; // Prevent bouncing
-
-    send_max_current_(current);
-    charge_current_text_sensor_->publish_state( std::to_string(current).c_str() );
+    send_max_current_( this->output_charge_current_);
+    charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
   }
 }
 
