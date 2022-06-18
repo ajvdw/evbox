@@ -105,6 +105,14 @@ void EVBoxDevice::process_message_( char *msg )
     {
       // Read MID meter from EVSE
       double m=0;
+      char meter[9];
+
+      strncpy( meter, &msg[msglen-12], 8 );
+      meter[8]=0;
+      m = strtoul(meter, NULL, 16);
+      
+  /*    
+      m=0;
       long factor = 268435456;
       for( i = msglen-12; i<msglen-4; i++)
       {
@@ -117,6 +125,8 @@ void EVBoxDevice::process_message_( char *msg )
         m = m + factor * v;
         factor = factor / 16; 
       }
+  */
+
       this->total_energy_ = m;
       if( total_energy_sensor_ )
         total_energy_sensor_->publish_state( this->total_energy_ );
