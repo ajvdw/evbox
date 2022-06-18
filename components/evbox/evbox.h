@@ -3,6 +3,7 @@
 #include "esphome/core/application.h"
 #include "esphome/core/component.h"
 #include "esphome/components/text_sensor/text_sensor.h"
+#include "esphome/components/sensor/sensor.h"
 #include "esphome/core/automation.h"
 #include "esphome/core/defines.h"
 #include "esphome/core/helpers.h"
@@ -24,8 +25,8 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   void set_sampletime(float sampletime) { this->sampletime_ = sampletime; }
   void set_samplevalue(float samplevalue) { this->samplevalue_ = samplevalue; }
   void set_samplevalue_text_sensor(text_sensor::TextSensor *text_sensor) { this->samplevalue_text_sensor_ = text_sensor; }
-  void set_charge_current_text_sensor(text_sensor::TextSensor *text_sensor) { this->charge_current_text_sensor_ = text_sensor; }
-  void set_total_energy_text_sensor(text_sensor::TextSensor *text_sensor) { this->total_energy_text_sensor_ = text_sensor; }
+  void set_charge_current_sensor(sensor::Sensor *sensor) { this->charge_current_sensor_ = sensor; }
+  void set_total_energy_sensor(sensor::Sensor *sensor) { this->total_energy_sensor_ = sensor; }
 
   void set_setpoint(float setpoint) { this->setpoint_ = setpoint; }
   void set_kp(float kp) { this->kp_ = kp; }
@@ -38,8 +39,8 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
  
   GPIOPin *flow_control_pin_{nullptr};
   text_sensor::TextSensor *samplevalue_text_sensor_{nullptr};
-  text_sensor::TextSensor *charge_current_text_sensor_{nullptr};
-  text_sensor::TextSensor *total_energy_text_sensor_{nullptr};
+  sensor::Sensor *charge_current_sensor_{nullptr};
+  sensor::Sensor *total_energy_sensor_{nullptr};
   bool receiving_;
   uint8_t received_data_[256];
   uint32_t received_len_;

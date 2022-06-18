@@ -6,15 +6,10 @@ from esphome.const import (
 )
 from . import CONF_EVBOX_ID, CONF_SAMPLEVALUE, EVBOX_COMPONENT_SCHEMA
 
-CONF_CHARGE_CURRENT = "charge_current"
-CONF_TOTAL_ENERGY = "total_energy"
-
 AUTO_LOAD = ["evbox"]
 
 TYPES = {
-    CONF_TOTAL_ENERGY,
     CONF_SAMPLEVALUE,
-    CONF_CHARGE_CURRENT,
 }
 
 CONFIG_SCHEMA = EVBOX_COMPONENT_SCHEMA.extend(

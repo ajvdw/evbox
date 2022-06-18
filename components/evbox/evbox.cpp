@@ -64,7 +64,8 @@ void EVBoxDevice::loop() {
     lastSample = now;
 
     send_max_current_( this->output_charge_current_);
-    charge_current_text_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
+    if(charge_current_sensor_)
+      charge_current_sensor_->publish_state( std::to_string(this->output_charge_current_).c_str() );
   }
 }
 
@@ -107,8 +108,9 @@ void EVBoxDevice::process_message_( char *msg )
         m = m + factor * v;
         factor = factor / 16; 
       }
-      this->total_energy_ = m /1000;
-      total_energy_text_sensor_->publish_state( std::to_string(this->total_energy_).c_str() );
+      this->total_energy_ = m;
+      if( total_energy_sensor_ )
+        total_energy_sensor_->publish_state( std::to_string(this->total_energy_).c_str() );
     }
   }
   //ESP_LOGD(TAG, "RX: %s", msg );

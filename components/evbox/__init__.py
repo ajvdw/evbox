@@ -9,7 +9,7 @@ from esphome.const import (
 )
 from esphome import pins
 
-AUTO_LOAD = ["text_sensor"]
+AUTO_LOAD = ["text_sensor","sensor"]
 
 CONF_SETPOINT = "setpoint"
 CONF_MAX_CC = "max_charge_current"
