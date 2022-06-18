@@ -18,8 +18,18 @@ CONF_TOTAL_ENERGY = "total_energy"
 
 AUTO_LOAD = ["evbox"]
 
-TYPES = { CONF_CHARGE_CURRENT: sensor.sensor_schema( UNIT_AMPERE, ICON_EMPTY, 1, DEVICE_CLASS_CURRENT, STATE_CLASS_MEASUREMENT ),
-          CONF_TOTAL_ENERGY: sensor.sensor_schema( UNIT_WATT_HOURS, ICON_EMPTY, 1, DEVICE_CLASS_ENERGY, STATE_CLASS_TOTAL_INCREASING, ),
+TYPES = { CONF_CHARGE_CURRENT: sensor.sensor_schema( 
+            unit_of_measurement=UNIT_AMPERE,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_CURRENT,
+            state_class=STATE_CLASS_MEASUREMENT, 
+            ),
+          CONF_TOTAL_ENERGY: sensor.sensor_schema( 
+            unit_of_measurement=UNIT_WATT_HOURS,
+            accuracy_decimals=1,
+            device_class=DEVICE_CLASS_ENERGY,
+            state_class=STATE_CLASS_TOTAL_INCREASING, 
+            ),
         }
 
 CONFIG_SCHEMA = EVBOX_COMPONENT_SCHEMA.extend(
