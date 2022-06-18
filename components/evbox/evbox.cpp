@@ -22,7 +22,8 @@ void EVBoxDevice::setup() {
   receiving_ = false;
   output_charge_current_ = 0;
 
-  pid = new PID(&(this->samplevalue_), &(this->output_charge_current_), &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
+  pid = new PID(&(this->samplevalue_), &(this->output_charge_current_), 
+                &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
   pid->SetSampleTime(this->sampletime_ * 1000); 
   pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
   pid->SetMode(AUTOMATIC);
@@ -33,7 +34,7 @@ void EVBoxDevice::loop() {
   static uint32_t lastSample=now;
   static uint32_t lastMsg=0;
 
-  // Capture EVBox data and just print it
+  // Capture EVBox data 
   if (this->available()) {
     uint8_t c;
     this->read_byte(&c);
@@ -79,6 +80,8 @@ void EVBoxDevice::process_message_( char *msg )
 {
   int i;
   int msglen = strlen(msg);
+
+  ESP_LOGD(TAG, "RX: %s", msg );
 
   // Calc checksum
   if( msglen > 12 )
