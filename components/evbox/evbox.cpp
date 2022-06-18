@@ -82,7 +82,7 @@ void EVBoxDevice::process_message_( char *msg )
   int i;
   int msglen = strlen(msg);
 
-  ESP_LOGD(TAG, "RX: %s", msg );
+  //ESP_LOGD(TAG, "RX: %s", msg );
 
   // Calc checksum
   if( msglen == 56 )
@@ -90,7 +90,9 @@ void EVBoxDevice::process_message_( char *msg )
     int cm = 0; 
     int cx = 0; 
     
-    for(i=0; i<msglen-4; i++ )
+    ESP_LOGD(TAG, "Processing received message");
+
+    for(i=0; i<52; i++ )
     {
       cm = (cm + msg[i]) & 255;
       cx = cx ^ (msg[i]);
@@ -100,13 +102,13 @@ void EVBoxDevice::process_message_( char *msg )
     uint8_t csx = (uint8_t)cx; 
 
     // Checksum and header validation
-    if( hex[csm >> 4] == msg[msglen-4] && hex[csm & 15] == msg[msglen-3] && 
-        hex[csx >> 4] == msg[msglen-2] && hex[csx & 15] == msg[msglen-1] && 
+    if( hex[csm >> 4] == msg[52] && hex[csm & 15] == msg[53] && 
+        hex[csx >> 4] == msg[54] && hex[csx & 15] == msg[55] && 
         strncmp( msg, "A08069", 6  ) == 0 )
     {
       // Read MID meter from EVSE
       char meter[9];
-      strncpy( meter, &msg[msglen-12], 8 );
+      strncpy( meter, &msg[44], 8 );
       meter[8]=0;
 
       this->total_energy_ = strtoul(meter, NULL, 16);
@@ -134,7 +136,6 @@ void EVBoxDevice::process_message_( char *msg )
 
     }
   }
-  //ESP_LOGD(TAG, "RX: %s", msg );
 }
 
 void EVBoxDevice::send_max_current_( float amp ) {
