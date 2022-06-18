@@ -128,6 +128,10 @@ void EVBoxDevice::send_max_current_( float amp ) {
   buf[8]=buf[12]=buf[16]=hex[(ta >> 4) & 15];
   buf[9]=buf[13]=buf[17]=hex[(ta >> 0) & 15];
 
+// Test 1 fase, fase 2 en 3 op 0
+buf[12]=buf[16]=0;
+buf[13]=buf[17]=0;
+
   // Calc checksum
   int cs;
   
