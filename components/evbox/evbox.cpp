@@ -20,6 +20,7 @@ void EVBoxDevice::setup() {
   received_len_ = 0;
   total_energy_ = 0;
   receiving_ = false;
+  output_charge_current_ = 0;
 
   pid = new PID(&(this->samplevalue_), &(this->output_charge_current_), &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
   pid->SetSampleTime(this->sampletime_ * 1000); 
@@ -64,6 +65,7 @@ void EVBoxDevice::loop() {
     lastSample = now;
 
     send_max_current_( this->output_charge_current_);
+
     if(charge_current_sensor_)
       charge_current_sensor_->publish_state( this->output_charge_current_ );
   }

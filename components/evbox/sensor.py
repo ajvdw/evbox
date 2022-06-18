@@ -26,7 +26,7 @@ TYPES = { CONF_CHARGE_CURRENT: sensor.sensor_schema(
             ),
           CONF_TOTAL_ENERGY: sensor.sensor_schema( 
             unit_of_measurement=UNIT_WATT_HOURS,
-            accuracy_decimals=1,
+            accuracy_decimals=0,
             device_class=DEVICE_CLASS_ENERGY,
             state_class=STATE_CLASS_TOTAL_INCREASING, 
             ),
