@@ -30,7 +30,7 @@ evbox_ns = cg.esphome_ns.namespace("esphome::evbox")
 EVBoxDevice = evbox_ns.class_("EVBoxDevice", uart.UARTDevice, cg.Component)
 
 
-OperatingMode = operatingmode_ns.enum("OperatingMode")
+OperatingMode = evbox_ns.enum("OperatingMode")
 MODE_OPTIONS = {
     "Off": OperatingMode.MODE_OFF,
     "Min": OperatingMode.MODE_MIN,
