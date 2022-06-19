@@ -45,7 +45,7 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   void set_kp(float kp) { this->kp_ = kp; }
   void set_ki(float ki) { this->ki_ = ki; }
   void set_kd(float kd) { this->kd_ = kd; }
-  void set_mode(Modes mode) { this->mode_ = mode;  ESP_LOGW(TAG, "MODE=%d", mode); }
+  void set_mode(Modes mode) { this->mode_ = mode; }
  
  protected:
   void send_max_current_( float amp );
