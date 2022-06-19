@@ -15,7 +15,7 @@ static const char* const TAG = "evbox";
 namespace esphome {
 namespace evbox {
 
-enum Modes {
+enum OperatingModes {
   MODE_OFF = 0,
   MODE_MIN = 1,
   MODE_SOLAR = 2,
@@ -45,7 +45,7 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   void set_kp(float kp) { this->kp_ = kp; }
   void set_ki(float ki) { this->ki_ = ki; }
   void set_kd(float kd) { this->kd_ = kd; }
-  void set_mode(Modes mode) { this->mode_ = mode; }
+  void set_mode(OperatingModes mode) { this->mode_ = mode; }
  
  protected:
   void send_max_current_( float amp );
@@ -95,10 +95,10 @@ template<typename... Ts> class SetOperatingModeAction : public Action<Ts...> {
     public:
     explicit SetOperatingModeAction(EVBoxDevice *parent) : parent_(parent) {}
 
-    TEMPLATABLE_VALUE(enum Modes, mode);
+    TEMPLATABLE_VALUE(OperatingModes, mode);
 
     void play(Ts... x) override {
-        Modes mode = this->mode_.value(x...);
+        OperatingModes mode = this->mode_.value(x...);
         this->parent_->set_mode(mode);
     }
     

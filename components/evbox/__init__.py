@@ -30,13 +30,13 @@ CONF_EVBOX_ID = "evbox_id"
 evbox_ns = cg.esphome_ns.namespace("esphome::evbox")
 EVBoxDevice = evbox_ns.class_("EVBoxDevice", uart.UARTDevice, cg.Component)
 
-OperatingMode = evbox_ns.enum("OperatingMode", is_class=True)
+OperatingModes = evbox_ns.enum("OperatingModes")
 MODE_OPTIONS = {
-    "OFF": OperatingMode.MODE_OFF,
-    "MIN": OperatingMode.MODE_MIN,
-    "SOLAR": OperatingMode.MODE_SOLAR,
-    "MAX": OperatingMode.MODE_MAX,
-    "ON": OperatingMode.MODE_ON,
+    "OFF": OperatingModes.MODE_OFF,
+    "MIN": OperatingModes.MODE_MIN,
+    "SOLAR": OperatingModes.MODE_SOLAR,
+    "MAX": OperatingModes.MODE_MAX,
+    "ON": OperatingModes.MODE_ON,
 }
 
 SetSampleValueAction = evbox_ns.class_("SetSampleValueAction", automation.Action)
@@ -122,6 +122,6 @@ async def evbox_set_samplevalue_to_code(config, action_id, template_arg, args):
 async def evbox_set_mode_to_code(config, action_id, template_arg, args):
     paren = await cg.get_variable(config[CONF_ID])
     var = cg.new_Pvariable(action_id, template_arg, paren)
-    template_ = await cg.templatable(config[CONF_MODE], args, OperatingMode )
+    template_ = await cg.templatable(config[CONF_MODE], args, OperatingModes )
     cg.add(var.set_mode(template_))
     return var    
