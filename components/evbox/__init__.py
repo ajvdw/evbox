@@ -32,11 +32,11 @@ EVBoxDevice = evbox_ns.class_("EVBoxDevice", uart.UARTDevice, cg.Component)
 
 OperatingMode = evbox_ns.enum("OperatingMode")
 MODE_OPTIONS = {
-    "Off": OperatingMode.MODE_OFF,
-    "Min": OperatingMode.MODE_MIN,
-    "Solar": OperatingMode.MODE_SOLAR,
-    "Max": OperatingMode.MODE_MAX,
-    "On": OperatingMode.MODE_ON,
+    "OFF": OperatingMode.MODE_OFF,
+    "MIN": OperatingMode.MODE_MIN,
+    "SOLAR": OperatingMode.MODE_SOLAR,
+    "MAX": OperatingMode.MODE_MAX,
+    "ON": OperatingMode.MODE_ON,
 }
 
 SetSampleValueAction = evbox_ns.class_("SetSampleValueAction", automation.Action)
