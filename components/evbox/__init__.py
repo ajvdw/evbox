@@ -19,6 +19,7 @@ CONF_KI = "ki"
 CONF_KD = "kd"
 CONF_SAMPLETIME = "sampletime"
 CONF_SAMPLEVALUE = "samplevalue"
+CONF_MODE = "mode"
 
 CODEOWNERS = ["@ajvdw"]
 DEPENDENCIES = ["uart"]
@@ -28,8 +29,18 @@ CONF_EVBOX_ID = "evbox_id"
 evbox_ns = cg.esphome_ns.namespace("esphome::evbox")
 EVBoxDevice = evbox_ns.class_("EVBoxDevice", uart.UARTDevice, cg.Component)
 
-SetSampleValueAction = evbox_ns.class_("SetSampleValueAction", automation.Action)
 
+OperatingMode = operatingmode_ns.enum("OperatingMode")
+MODE_OPTIONS = {
+    "Off": OperatingMode.MODE_OFF,
+    "Min": OperatingMode.MODE_MIN,
+    "Solar": OperatingMode.MODE_SOLAR,
+    "Max": OperatingMode.MODE_MAX
+    "On": OperatingMode.MODE_ON,
+}
+
+SetSampleValueAction = evbox_ns.class_("SetSampleValueAction", automation.Action)
+SetOperatingModeAction = evbox_nx.class_("SetOperatingModeAction", automation.Action)
 
 EVBOX_COMPONENT_SCHEMA = cv.COMPONENT_SCHEMA.extend(
     {
@@ -88,9 +99,26 @@ async def to_code(config):
         }
     ),
 )
+@automation.register_action(
+    "evbox.set_mode",
+    SetOperatingModeAction,
+    cv.Schema(
+        {
+            cv.Required(CONF_ID): cv.use_id(EVBoxDevice),
+            cv.Required(CONF_MODE): cv.templatable( cv.enum( MODE_OPTIONS, upper=True ) ),
+        }
+    ),
+)
 async def evbox_set_samplevalue_to_code(config, action_id, template_arg, args):
     paren = await cg.get_variable(config[CONF_ID])
     var = cg.new_Pvariable(action_id, template_arg, paren)
     template_ = await cg.templatable(config[CONF_SAMPLEVALUE], args, float )
     cg.add(var.set_samplevalue(template_))
     return var
+
+async def evbox_set_mode_to_code(config, action_id, template_arg, args):
+    paren = await cg.get_variable(config[CONF_ID])
+    var = cg.new_Pvariable(action_id, template_arg, paren)
+    template_ = await cg.templatable(config[CONF_MODE], args, int )
+    cg.add(var.set_mode(template_))
+    return var    

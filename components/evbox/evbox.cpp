@@ -84,8 +84,8 @@ void EVBoxDevice::process_message_( char *msg )
 
   //ESP_LOGD(TAG, "RX: %s", msg );
 
-  // Calc checksum
-  if( msglen == 56 )
+  // Check length and header
+  if( msglen == 56 && strncmp( msg, "A08069", 6  ) == 0)
   {
     int cm = 0; 
     int cx = 0; 
@@ -101,12 +101,11 @@ void EVBoxDevice::process_message_( char *msg )
     uint8_t csm = (uint8_t)cm; 
     uint8_t csx = (uint8_t)cx; 
 
-    // Checksum and header validation
+    // Checksum validation
     if( hex[csm >> 4] == msg[52] && hex[csm & 15] == msg[53] && 
-        hex[csx >> 4] == msg[54] && hex[csx & 15] == msg[55] && 
-        strncmp( msg, "A08069", 6  ) == 0 )
+        hex[csx >> 4] == msg[54] && hex[csx & 15] == msg[55]  )
     {
-      // Read MID meter from EVSE
+      // Read MID metered values from EVSE
       char meter[9];
       strncpy( meter, &msg[44], 8 );
       meter[8]=0;
