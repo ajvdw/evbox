@@ -73,7 +73,7 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   double ki_;
   double kd_;
   double total_energy_;
-  Modes  mode_;
+  OperatingModes mode_;
 };
 
 template<typename... Ts> class SetSampleValueAction : public Action<Ts...> {
