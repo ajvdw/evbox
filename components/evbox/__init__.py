@@ -1,3 +1,4 @@
+import enum
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import automation
@@ -121,6 +122,6 @@ async def evbox_set_samplevalue_to_code(config, action_id, template_arg, args):
 async def evbox_set_mode_to_code(config, action_id, template_arg, args):
     paren = await cg.get_variable(config[CONF_ID])
     var = cg.new_Pvariable(action_id, template_arg, paren)
-    template_ = await cg.templatable(config[CONF_MODE], args, MODE_OPTIONS )
+    template_ = await cg.templatable(config[CONF_MODE], args, enum.IntEnum )
     cg.add(var.set_mode(template_))
     return var    
