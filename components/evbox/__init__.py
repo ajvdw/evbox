@@ -35,7 +35,7 @@ MODE_OPTIONS = {
     "Off": OperatingMode.MODE_OFF,
     "Min": OperatingMode.MODE_MIN,
     "Solar": OperatingMode.MODE_SOLAR,
-    "Max": OperatingMode.MODE_MAX
+    "Max": OperatingMode.MODE_MAX,
     "On": OperatingMode.MODE_ON,
 }
 
