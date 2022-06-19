@@ -96,8 +96,8 @@ template<typename... Ts> class SetOperatingModeAction : public Action<Ts...> {
     TEMPLATABLE_VALUE(enum Modes, mode);
 
     void play(Ts... x) override {
-        enum Modes samplevalue = this->samplevalue_.value(x...);
-        this->parent_->set_samplevalue(samplevalue);
+        Modes mode = this->mode_.value(x...);
+        this->parent_->set_mode(mode);
     }
     
     protected:
