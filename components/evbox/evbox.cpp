@@ -44,7 +44,7 @@ void EVBoxDevice::loop() {
       case MODE_OFF:
         this->setpoint_ = 0;
         pid->SetOutputLimits(0,0);
-        output_charge_current_ = 0;
+        this->output_charge_current_ = 0;
         break;
       case MODE_MIN:
         this->setpoint_ = 0;
@@ -101,7 +101,11 @@ void EVBoxDevice::loop() {
     lastSample = now;
 
     if( !std::isnan( this->output_charge_current_ ) )
-    send_max_current_( this->output_charge_current_);
+
+    if( this->mode_ == MODE_OFF )
+      send_max_current_( 0.0 );
+    else
+      send_max_current_( this->output_charge_current_);
     
     if(calculated_current_sensor_)
       calculated_current_sensor_->publish_state( this->output_charge_current_ );
@@ -114,7 +118,7 @@ void EVBoxDevice::process_message_( char *msg )
   int i;
   int msglen = strlen(msg);
 
-  ESP_LOGD(TAG, "RX: %s", msg );
+  // ESP_LOGD(TAG, "RX: %s", msg );
 
   // Check length and header
   if( msglen == 56 && strncmp( msg, "A08069", 6  ) == 0)
