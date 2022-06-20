@@ -42,23 +42,23 @@ void EVBoxDevice::loop() {
     switch case( this->mode_ )
     {
       MODE_OFF:
-        pid->SetSetpoint( 0 );
+        this->setpoint_ = 0;
         pid->SetOutputLimits(0,0);
         break;
       MODE_MIN:
-        pid->SetSetpoint( 0 );
-         pid->SetOutputLimits(this->min_charge_current_, this->min_charge_current_);
+        this->setpoint_ = 0;
+        pid->SetOutputLimits(this->min_charge_current_, this->min_charge_current_);
         break;
       MODE_SOLAR:
-        pid->SetSetpoint( 0 );
+        this->setpoint_ = 0;
         pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
         break;
       MODE_MAX:
-        pid->SetSetpoint( 0.69 * this->max_charge_current_ ); // 11 kW @ 16A
+        this->setpoint_ = 0.69 * this->max_charge_current_; // 11 kW @ 16A
         pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
         break;
       MODE_ON:
-        pid->SetSetpoint( 0.69 * this->max_charge_current_ ); // 11 kW @ 16A
+        this->setpoint_ = 0.69 * this->max_charge_current_; // 11 kW @ 16A
         pid->SetOutputLimits(this->max_charge_current_, this->max_charge_current_);
         break;
     }

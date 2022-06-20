@@ -25,8 +25,6 @@ class PID
 
   void SetSampleTime(int);              // * sets the frequency, in Milliseconds, with which 
                                         //   the PID calculation is performed.  default is 100
-  void SetSetpoint(double);               // * sets the Setpoint, with which 
-                                        //   the PID calculation is performed.
   bool Compute();                       // * performs the PID calculation.  it should be
                                         //   called every time loop() cycles. ON/OFF 
   void SetOutputLimits(double, double); // * clamps the output to a specific range. 0-255 by default, but

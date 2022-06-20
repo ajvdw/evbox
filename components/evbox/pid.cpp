@@ -73,14 +73,6 @@ bool PID::Compute()
     return true;
 }
 
-/* SetSetpoint(...) *********************************************************
- * sets the Setpoint at which the calculation is performed
- ******************************************************************************/
-void PID::SetSetpoint(double NewSetpoint )
-{
-   *mySetpoint = NewSetpoint;
-} 
-
 /* SetSampleTime(...) *********************************************************
  * sets the period, in Milliseconds, at which the calculation is performed
  ******************************************************************************/
