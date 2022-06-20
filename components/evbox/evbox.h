@@ -95,7 +95,7 @@ template<typename... Ts> class SetOperatingModeAction : public Action<Ts...> {
     public:
     explicit SetOperatingModeAction(EVBoxDevice *parent) : parent_(parent) {}
 
-    TEMPLATABLE_VALUE(OperatingModes, mode);
+    TEMPLATABLE_VALUE(int, mode);
 
     void play(Ts... x) override {
         OperatingModes mode = this->mode_.value(x...);
