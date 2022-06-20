@@ -171,7 +171,7 @@ void EVBoxDevice::process_message_( char *msg )
 }
 
 void EVBoxDevice::send_max_current_( float amp ) {
-  // MaxChargingCurrent command
+  // MaxChargingCurrent command, timeout=60s, current after timeout 6A
   char buf[35] = "80A06900__00__00__003C003C003C003C" ;   
   int  ta = round(10*amp);
  
