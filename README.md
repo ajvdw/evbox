@@ -1,7 +1,9 @@
-# evbox
+# EVBox Charge Controller
 
 Homeassistant integration for EVBOX.
 Provides functionality for loadbalancing and solarcharging
+
+Use RS485 to communicate with EVBox
 
 ```
 substitutions:
