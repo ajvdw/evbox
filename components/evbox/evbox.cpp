@@ -25,6 +25,7 @@ void EVBoxDevice::setup() {
   pid = new PID(&(this->samplevalue_), &(this->output_charge_current_), 
                 &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
   pid->SetSampleTime(this->sampletime_ * 1000); 
+
   pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
   pid->SetMode(AUTOMATIC);
 }
@@ -33,6 +34,35 @@ void EVBoxDevice::loop() {
   const uint32_t now = millis();
   static uint32_t lastSample=now;
   static uint32_t lastMsg=0;
+  static OperatingModes lastMode = MODE_OFF;
+
+  if( lastMode != this->mode_ )
+  {
+    lastMode = this->mode_;
+    switch case( this->mode_ )
+    {
+      MODE_OFF:
+        pid->SetSetpoint( 0 );
+        pid->SetOutputLimits(0,0);
+        break;
+      MODE_MIN:
+        pid->SetSetpoint( 0 );
+         pid->SetOutputLimits(this->min_charge_current_, this->min_charge_current_);
+        break;
+      MODE_SOLAR:
+        pid->SetSetpoint( 0 );
+        pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
+        break;
+      MODE_MAX:
+        pid->SetSetpoint( 0.69 * this->max_charge_current_ ); // 11 kW @ 16A
+        pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
+        break;
+      MODE_ON:
+        pid->SetSetpoint( 0.69 * this->max_charge_current_ ); // 11 kW @ 16A
+        pid->SetOutputLimits(this->max_charge_current_, this->max_charge_current_);
+        break;
+    }
+  }
 
   // Capture EVBox data 
   if (this->available()) {
