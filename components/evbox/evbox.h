@@ -98,7 +98,7 @@ template<typename... Ts> class SetOperatingModeAction : public Action<Ts...> {
     TEMPLATABLE_VALUE(int, mode);
 
     void play(Ts... x) override {
-        OperatingModes mode = this->mode_.value(x...);
+        OperatingModes mode = (OperatingModes) this->mode_.value(x...);
         this->parent_->set_mode(mode);
     }
     
