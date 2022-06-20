@@ -95,17 +95,18 @@ void EVBoxDevice::loop() {
     if(samplevalue_sensor_)
       samplevalue_sensor_->publish_state( this->samplevalue_ );
 
-    if( !std::isnan( this->samplevalue_ ) )
-      pid->Compute();
+    if( this->mode_ == MODE_OFF )
+      this->output_charge_current_ = 0.0;
+    else
+    {
+      if( !std::isnan( this->samplevalue_ ) )
+        pid->Compute();
+    }
 
     lastSample = now;
 
     if( !std::isnan( this->output_charge_current_ ) )
-
-    if( this->mode_ == MODE_OFF )
-      send_max_current_( 0.0 );
-    else
-      send_max_current_( this->output_charge_current_);
+    send_max_current_( this->output_charge_current_ );
     
     if(calculated_current_sensor_)
       calculated_current_sensor_->publish_state( this->output_charge_current_ );
