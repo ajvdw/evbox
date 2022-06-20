@@ -1,5 +1,8 @@
 # evbox
 
+Homeassistant integration for EVBOX.
+Provides functionality for loadbalancing and solarcharging
+
 ```
 substitutions:
   device_name: "laadpunt"
@@ -27,6 +30,23 @@ uart:
   tx_pin: GPIO14
   baud_rate: 38400
 
+select:
+  - platform: template
+    name: "Operation mode"
+    optimistic: true
+    options:
+      - "Off"
+      - "Min"
+      - "Solar"
+      - "Max"
+      - "On"
+    initial_option: "Min"
+    on_value:
+      then:
+        evbox.set_mode:
+          id: chargepoint1
+          mode: !lambda "return (i);"
+    
 evbox:
   id: chargepoint1
   flow_control_pin: GPIO13
@@ -49,16 +69,23 @@ sensor:
         evbox.set_samplevalue:
           id: chargepoint1
           samplevalue: !lambda "return 1.0*(x);"
-          
-text_sensor:
   - platform: evbox
     evbox_id: chargepoint1
-    charge_current:
-      name: "Charge Current (A)"
-    samplevalue:
-      name: "Power (kW)"
+    calculated_current:
+      name: "EVSE Calculated Current"
+    phase1_current:
+      name: "EVSE Phase1 Current"
+    phase2_current:
+      name: "EVSE Phase2 Current"
+    phase3_current:
+      name: "EVSE Phase3 Current"
     total_energy:
-      name: "Total Energy (kWh)"
+      name: "EVSE Total Energy"
+    samplevalue:
+      name: "Grid Net power"
+      unit_of_measurement: "kW"
+          
+text_sensor:
   - platform: version
     name: "ESPHome Version ${device_name}"
     hide_timestamp: true
