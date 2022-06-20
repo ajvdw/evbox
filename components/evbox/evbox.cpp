@@ -114,7 +114,7 @@ void EVBoxDevice::process_message_( char *msg )
   int i;
   int msglen = strlen(msg);
 
-  //ESP_LOGD(TAG, "RX: %s", msg );
+  ESP_LOGD(TAG, "RX: %s", msg );
 
   // Check length and header
   if( msglen == 56 && strncmp( msg, "A08069", 6  ) == 0)
