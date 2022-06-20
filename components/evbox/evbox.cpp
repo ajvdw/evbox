@@ -172,7 +172,7 @@ void EVBoxDevice::process_message_( char *msg )
 
 void EVBoxDevice::send_max_current_( float amp ) {
   // MaxChargingCurrent command
-  char buf[] = "80A06900__00__00__" ;   
+  char buf[] = "80A06900__00__00__003C003C003C003C" ;   
   int  ta = round(10*amp);
  
   // Set current values (fill in the blanks)
