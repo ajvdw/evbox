@@ -60,6 +60,9 @@ void EVBoxDevice::loop() {
   // Take a sample if time has passed
   if( (now - lastSample) > 1000.0*(this->sampletime_ ) )
   {
+  
+  ESP_LOGW(TAG, "MODE: %d", this->mode_ );
+
     if(samplevalue_sensor_)
       samplevalue_sensor_->publish_state( this->samplevalue_ );
 
