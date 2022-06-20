@@ -35,7 +35,6 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   void set_samplevalue_sensor(sensor::Sensor *sensor) { this->samplevalue_sensor_ = sensor; }
   void set_calculated_current_sensor(sensor::Sensor *sensor) { this->calculated_current_sensor_ = sensor; }
 
-  void set_requested_current_sensor(sensor::Sensor *sensor) { this->requested_current_sensor_ = sensor; }
   void set_phase1_current_sensor(sensor::Sensor *sensor) { this->phase1_current_sensor_ = sensor; }
   void set_phase2_current_sensor(sensor::Sensor *sensor) { this->phase2_current_sensor_ = sensor; }
   void set_phase3_current_sensor(sensor::Sensor *sensor) { this->phase3_current_sensor_ = sensor; }
@@ -54,7 +53,6 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   GPIOPin *flow_control_pin_{nullptr};
   sensor::Sensor *samplevalue_sensor_{nullptr};
   sensor::Sensor *calculated_current_sensor_{nullptr}; 
-  sensor::Sensor *requested_current_sensor_{nullptr};
   sensor::Sensor *phase1_current_sensor_{nullptr};
   sensor::Sensor *phase2_current_sensor_{nullptr};
   sensor::Sensor *phase3_current_sensor_{nullptr};

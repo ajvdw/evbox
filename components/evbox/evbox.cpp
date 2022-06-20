@@ -44,6 +44,7 @@ void EVBoxDevice::loop() {
       case MODE_OFF:
         this->setpoint_ = 0;
         pid->SetOutputLimits(0,0);
+        output_charge_current_ = 0;
         break;
       case MODE_MIN:
         this->setpoint_ = 0;
@@ -147,10 +148,6 @@ void EVBoxDevice::process_message_( char *msg )
 
       char current[5];
       current[4]=0;
-
-      strncpy( current, &msg[16], 4 );
-      if(requested_current_sensor_)
-        requested_current_sensor_->publish_state( 0.1 * strtoul(current, NULL, 16) );
 
       strncpy( current, &msg[20], 4 );
       if(phase1_current_sensor_)
