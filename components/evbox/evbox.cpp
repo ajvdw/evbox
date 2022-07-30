@@ -21,9 +21,10 @@ void EVBoxDevice::setup() {
   total_energy_ = 0;
   receiving_ = false;
   output_charge_current_ = 0;
+  this->targetvalue_ = this->setpoint_;
 
   pid = new PID(&(this->samplevalue_), &(this->output_charge_current_), 
-                &(this->setpoint_), this->kp_, this->ki_, this->kd_, DIRECT);
+                &(this->targetvalue_), this->kp_, this->ki_, this->kd_, DIRECT);
   pid->SetSampleTime(this->sampletime_ * 1000); 
 
   pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
@@ -42,24 +43,24 @@ void EVBoxDevice::loop() {
     switch ( this->mode_ )
     {
       case MODE_OFF:
-        this->setpoint_ = 0;
+        this->targetvalue_ = 0;
         pid->SetOutputLimits(0,0);
         this->output_charge_current_ = 0;
         break;
       case MODE_MIN:
-        this->setpoint_ = 0;
+        this->targetvalue_ = 0;
         pid->SetOutputLimits(this->min_charge_current_, this->min_charge_current_);
         break;
       case MODE_SOLAR:
-        this->setpoint_ = 0;
+        this->targetvalue_ = this->setpoint_;
         pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
         break;
       case MODE_MAX:
-        this->setpoint_ = 0.69 * this->max_charge_current_; // 11 kW @ 16A
+        this->targetvalue_ = 0.69 * this->max_charge_current_; // 11 kW @ 16A
         pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);
         break;
       case MODE_ON:
-        this->setpoint_ = 0.69 * this->max_charge_current_; // 11 kW @ 16A
+        this->targetvalue_ = 0.69 * this->max_charge_current_; // 11 kW @ 16A
         pid->SetOutputLimits(this->max_charge_current_, this->max_charge_current_);
         break;
     }
