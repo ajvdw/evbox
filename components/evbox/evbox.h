@@ -65,7 +65,7 @@ class EVBoxDevice : public uart::UARTDevice, public Component {
   double max_charge_current_;
   double output_charge_current_;
   double setpoint_;
-  double targetvalue;
+  double targetvalue_;
   double samplevalue_;
   double sampletime_; 
   double kp_;
