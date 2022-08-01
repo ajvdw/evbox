@@ -41,7 +41,6 @@ MODE_OPTIONS = {
 }
 
 SetSampleValueAction = evbox_ns.class_("SetSampleValueAction", automation.Action)
-
 SetOperatingModeAction = evbox_ns.class_("SetOperatingModeAction", automation.Action)
 
 EVBOX_COMPONENT_SCHEMA = cv.COMPONENT_SCHEMA.extend(
