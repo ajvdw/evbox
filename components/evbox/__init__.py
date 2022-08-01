@@ -34,7 +34,7 @@ OperatingModes = evbox_ns.enum("OperatingModes")
 MODE_OPTIONS = {
     "OFF": OperatingModes.MODE_OFF,
     "MIN": OperatingModes.MODE_MIN,
-    "wAIT": OperatingModes.MODE_WAIT,
+    "WAIT": OperatingModes.MODE_WAIT,
     "SOLAR": OperatingModes.MODE_SOLAR,
     "MAX": OperatingModes.MODE_MAX,
     "ON": OperatingModes.MODE_ON,
