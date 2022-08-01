@@ -51,6 +51,11 @@ void EVBoxDevice::loop() {
         this->targetvalue_ = 0;
         pid->SetOutputLimits(this->min_charge_current_, this->min_charge_current_);
         break;
+      case MODE_WAIT:
+        this->targetvalue_ = 0;
+        pid->SetOutputLimits(0,0);
+        this->output_charge_current_ = 0;
+        break;
       case MODE_SOLAR:
         this->targetvalue_ = this->setpoint_;
         pid->SetOutputLimits(this->min_charge_current_, this->max_charge_current_);

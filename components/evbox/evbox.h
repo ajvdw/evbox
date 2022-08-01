@@ -18,9 +18,10 @@ namespace evbox {
 enum OperatingModes {
   MODE_OFF = 0,
   MODE_MIN = 1,
-  MODE_SOLAR = 2,
-  MODE_MAX = 3,
-  MODE_ON = 4,
+  MODE_WAIT = 2,
+  MODE_SOLAR = 3,
+  MODE_MAX = 4,
+  MODE_ON = 5,
 };
 
 class EVBoxDevice : public uart::UARTDevice, public Component {
