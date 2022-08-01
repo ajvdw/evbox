@@ -101,7 +101,7 @@ void EVBoxDevice::loop() {
     if(samplevalue_sensor_)
       samplevalue_sensor_->publish_state( this->samplevalue_ );
 
-    if( this->mode_ == MODE_OFF )
+    if( this->mode_ == MODE_OFF ||this->mode_ == MODE_WAIT )
       this->output_charge_current_ = 0.0;
     else
     {
