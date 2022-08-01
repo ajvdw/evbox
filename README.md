@@ -39,29 +39,42 @@ select:
     options:
       - "Off"
       - "Min"
+      - "Wait"
       - "Solar"
       - "Max"
       - "On"
-    initial_option: "Min"
+    initial_option: "Solar"
     on_value:
       then:
         evbox.set_mode:
           id: chargepoint1
           mode: !lambda "return (i);"
     
+#kp was 0.7    
 evbox:
   id: chargepoint1
   flow_control_pin: GPIO13
   sampletime: 1.0
-  setpoint: 0.0
+  setpoint: 0.2
   min_charge_current: 6.0
   max_charge_current: 16.0
-  kp: 0.7
+  kp: 0.25
   ki: 0.1
   kd: 0.05
 
 api:
-
+  services:
+    - service: set_charging_to_solar
+      then:
+        evbox.set_mode:
+          id: chargepoint1
+          mode: "Solar"
+    - service: set_charging_to_wait
+      then:
+        evbox.set_mode:
+          id: chargepoint1
+          mode: "Wait"          
+          
 sensor:
   - platform: homeassistant
     entity_id: sensor.netpower
