@@ -24,6 +24,7 @@ enum OperatingModes {
   MODE_ON = 5,
 };
 
+
 class EVBoxDevice : public uart::UARTDevice, public Component {
  public:
   void setup() override;
